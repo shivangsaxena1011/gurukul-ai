@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { ChapterList } from './components/ChapterList';
@@ -16,11 +16,13 @@ import { AudioPodcastModal } from './components/AudioPodcastModal';
 import { ExamPredictorModal } from './components/ExamPredictorModal';
 import { PeerBattleModal } from './components/PeerBattleModal';
 import { AuthModal } from './components/AuthModal';
+import { AuthLandingPage } from './components/AuthLandingPage';
 import { Chapter } from './types';
 import { Sparkles, Heart, Code2 } from 'lucide-react';
 
 const AppContent: React.FC = () => {
   const { language, t } = useLanguage();
+  const { hasEnteredApp, setHasEnteredApp } = useAuth();
   const [activeTab, setActiveTab] = useState<'home' | 'tutor' | 'practice' | 'offline' | 'guardian'>('home');
   const [isVoiceOpen, setIsVoiceOpen] = useState(false);
   const [isPhotoOpen, setIsPhotoOpen] = useState(false);
@@ -30,6 +32,11 @@ const AppContent: React.FC = () => {
   const [selectedPodcastChapter, setSelectedPodcastChapter] = useState<Chapter | null>(null);
   const [isPodcastOpen, setIsPodcastOpen] = useState(false);
   const [tutorInitialQuery, setTutorInitialQuery] = useState('');
+
+  // If user has not entered yet, render the dedicated production Front Page
+  if (!hasEnteredApp) {
+    return <AuthLandingPage onEnter={() => setHasEnteredApp(true)} />;
+  }
 
   const handleStartTutorWithMode = (mode?: 'TEXT' | 'VOICE' | 'PHOTO') => {
     if (mode === 'VOICE') {

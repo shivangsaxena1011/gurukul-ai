@@ -19,6 +19,8 @@ interface AuthContextType {
   setIsOnboardingOpen: (open: boolean) => void;
   isAuthModalOpen: boolean;
   setIsAuthModalOpen: (open: boolean) => void;
+  hasEnteredApp: boolean;
+  setHasEnteredApp: (entered: boolean) => void;
   signInGoogle: () => Promise<void>;
   signOutUser: () => Promise<void>;
   continueAsGuest: () => void;
@@ -67,6 +69,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [pendingSyncCount, setPendingSyncCount] = useState<number>(0);
   const [isOnboardingOpen, setIsOnboardingOpen] = useState<boolean>(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false);
+  const [hasEnteredApp, setHasEnteredAppState] = useState<boolean>(() => {
+    // If the user already logged in via google or previously chosen to enter, remember for current session
+    return sessionStorage.getItem('gurukul_has_entered') === 'true';
+  });
+
+  const setHasEnteredApp = (entered: boolean) => {
+    setHasEnteredAppState(entered);
+    if (entered) {
+      sessionStorage.setItem('gurukul_has_entered', 'true');
+    } else {
+      sessionStorage.removeItem('gurukul_has_entered');
+    }
+  };
 
   // Synchronize with indexedDB and localStorage
   useEffect(() => {
@@ -128,6 +143,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         isGuest: false,
         totalPoints: prev.totalPoints + 100, // Reward bonus points for signing in
       }));
+      setHasEnteredApp(true);
       setIsAuthModalOpen(false);
     } catch (err) {
       console.error('Google sign in error:', err);
@@ -144,6 +160,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       photoURL: undefined,
       isGuest: true,
     }));
+    setHasEnteredApp(false);
   };
 
   const continueAsGuest = () => {
@@ -152,6 +169,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       isGuest: true,
       name: prev.name === 'Aryan Verma' ? 'Guest Scholar' : prev.name,
     }));
+    setHasEnteredApp(true);
     setIsAuthModalOpen(false);
   };
 
@@ -184,6 +202,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setIsOnboardingOpen,
         isAuthModalOpen,
         setIsAuthModalOpen,
+        hasEnteredApp,
+        setHasEnteredApp,
         signInGoogle,
         signOutUser,
         continueAsGuest,
