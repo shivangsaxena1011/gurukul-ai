@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
 import { localDB } from '../services/indexedDB';
-import { SAMPLE_CHAPTERS } from '../data/constants';
+import { getChaptersForGradeAndBoard } from '../data/curriculum';
 import { OfflinePack, Chapter } from '../types';
 import { OfflineQRShareModal } from './OfflineQRShareModal';
 import {
@@ -20,7 +20,7 @@ import {
 
 export const OfflineManager: React.FC = () => {
   const { t } = useLanguage();
-  const { isOnline, pendingSyncCount, triggerSync } = useAuth();
+  const { user, isOnline, pendingSyncCount, triggerSync } = useAuth();
   const [downloadedPacks, setDownloadedPacks] = useState<OfflinePack[]>([]);
   const [downloadingSlug, setDownloadingSlug] = useState<string | null>(null);
   const [syncing, setSyncing] = useState(false);
@@ -195,7 +195,7 @@ export const OfflineManager: React.FC = () => {
         </h3>
 
         <div className="grid sm:grid-cols-2 gap-4">
-          {SAMPLE_CHAPTERS.map((ch) => {
+          {getChaptersForGradeAndBoard(user?.grade || 10, user?.board || 'CBSE').map((ch) => {
             const isSaved = downloadedPacks.some((p) => p.slug === ch.slug);
             const isCurrentlyDownloading = downloadingSlug === ch.slug;
 

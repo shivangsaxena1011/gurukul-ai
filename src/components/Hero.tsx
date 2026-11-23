@@ -140,22 +140,6 @@ export const Hero: React.FC<HeroProps> = ({
                 <span>{t('NCERT एवं राज्य बोर्ड आधारित पाठ्यक्रम', 'NCERT & State Board Aligned Curriculum')}</span>
               </div>
             </div>
-
-            {/* Social Proof & Rating Badge */}
-            <div className="flex items-center justify-center lg:justify-start gap-3 pt-2">
-              <div className="flex -space-x-2">
-                <span className="w-7 h-7 rounded-full bg-saffron-500/20 border-2 border-[#0B0F19] flex items-center justify-center text-xs shadow">👩‍🎓</span>
-                <span className="w-7 h-7 rounded-full bg-emerald-500/20 border-2 border-[#0B0F19] flex items-center justify-center text-xs shadow">🧑‍🎓</span>
-                <span className="w-7 h-7 rounded-full bg-blue-500/20 border-2 border-[#0B0F19] flex items-center justify-center text-xs shadow">👩‍💻</span>
-                <span className="w-7 h-7 rounded-full bg-amber-500/30 border-2 border-[#0B0F19] flex items-center justify-center text-[10px] font-black text-amber-300 shadow">45k+</span>
-              </div>
-              <div className="text-left text-xs text-ink-300">
-                <div className="flex items-center text-amber-400 text-xs">
-                  {'★★★★★'} <span className="text-[11px] font-extrabold text-white ml-1">4.9/5</span>
-                </div>
-                <span className="text-[10px] text-ink-400">{t('झारखंड व देश भर के 45,000+ विद्यार्थियों एवं शिक्षकों द्वारा विश्वसनीय', 'Trusted by 45,000+ students and educators across India')}</span>
-              </div>
-            </div>
           </div>
 
           {/* Right 3D Visual Column */}
