@@ -67,12 +67,12 @@ export const MathCanvasModal: React.FC<MathCanvasModalProps> = ({
     canvas.height = rect.height * dpr;
     ctx.scale(dpr, dpr);
 
-    // Dark grid background
-    ctx.fillStyle = '#0B0F19';
+    // Warm crisp light grid background
+    ctx.fillStyle = '#FFFFFF';
     ctx.fillRect(0, 0, rect.width, rect.height);
 
     // Draw subtle math grid lines
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+    ctx.strokeStyle = 'rgba(203, 213, 225, 0.4)';
     ctx.lineWidth = 1;
     const gridSize = 24;
     for (let x = 0; x < rect.width; x += gridSize) {
@@ -201,27 +201,27 @@ export const MathCanvasModal: React.FC<MathCanvasModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-ink-950/85 backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-3xl glass-panel border border-saffron-500/30 rounded-3xl p-5 sm:p-7 space-y-4 shadow-2xl max-h-[92dvh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/40 backdrop-blur-md animate-fade-in">
+      <div className="relative w-full max-w-3xl bg-white border border-slate-200/90 rounded-3xl p-5 sm:p-7 space-y-4 shadow-2xl max-h-[92dvh] overflow-y-auto">
         {/* Close Button */}
         <button
           onClick={onClose}
           aria-label="Close Math Canvas"
-          className="absolute top-4 right-4 p-2 rounded-xl bg-white/5 hover:bg-white/10 text-ink-400 hover:text-white transition-colors"
+          className="absolute top-4 right-4 p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 transition-colors cursor-pointer"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Header */}
         <div className="space-y-1">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-saffron-500/10 border border-saffron-500/25 text-saffron-400 text-xs font-bold">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-saffron-50 border border-saffron-200 text-saffron-700 text-xs font-bold">
             <Sparkles className="w-3.5 h-3.5" />
             <span>{t('हस्तलिखित गणित सॉल्वर', 'Interactive Handwritten Math Solver')}</span>
           </div>
-          <h2 className="text-xl sm:text-2xl font-extrabold text-white">
+          <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900">
             {t('समीकरण या ज्यामिति चित्र बनाएँ', 'Draw Formulas, Equations & Geometry')}
           </h2>
-          <p className="text-xs text-ink-300">
+          <p className="text-xs text-slate-600">
             {t(
               'उंगली या पेन से स्क्रीन पर गणित का कोई भी सवाल लिखें। गुरुकुल AI सूत्र पहचानकर चरणबद्ध हल देगा।',
               'Draw any equation or geometric problem on screen. Gurukul AI recognizes symbols and explains the proof.'
@@ -230,15 +230,15 @@ export const MathCanvasModal: React.FC<MathCanvasModalProps> = ({
         </div>
 
         {/* Toolbar */}
-        <div className="flex flex-wrap items-center justify-between gap-2 p-2 rounded-2xl bg-ink-900/80 border border-white/10 text-xs">
+        <div className="flex flex-wrap items-center justify-between gap-2 p-2 rounded-2xl bg-slate-50 border border-slate-200 text-xs">
           {/* Pen / Eraser / Clear */}
           <div className="flex items-center gap-1.5">
             <button
               onClick={() => setTool('pen')}
-              className={`flex items-center gap-1 px-3 py-1.5 rounded-xl font-bold transition-all ${
+              className={`flex items-center gap-1 px-3 py-1.5 rounded-xl font-bold transition-all cursor-pointer ${
                 tool === 'pen'
-                  ? 'bg-saffron-500 text-ink-950 shadow-md'
-                  : 'bg-white/5 text-ink-300 hover:text-white'
+                  ? 'bg-saffron-500 text-slate-950 shadow-sm'
+                  : 'bg-white text-slate-600 border border-slate-200 hover:text-slate-900'
               }`}
             >
               <Edit3 className="w-3.5 h-3.5" />
@@ -246,10 +246,10 @@ export const MathCanvasModal: React.FC<MathCanvasModalProps> = ({
             </button>
             <button
               onClick={() => setTool('eraser')}
-              className={`flex items-center gap-1 px-3 py-1.5 rounded-xl font-bold transition-all ${
+              className={`flex items-center gap-1 px-3 py-1.5 rounded-xl font-bold transition-all cursor-pointer ${
                 tool === 'eraser'
-                  ? 'bg-rose-500 text-white shadow-md'
-                  : 'bg-white/5 text-ink-300 hover:text-white'
+                  ? 'bg-rose-500 text-white shadow-sm'
+                  : 'bg-white text-slate-600 border border-slate-200 hover:text-slate-900'
               }`}
             >
               <Eraser className="w-3.5 h-3.5" />
@@ -257,7 +257,7 @@ export const MathCanvasModal: React.FC<MathCanvasModalProps> = ({
             </button>
             <button
               onClick={clearCanvas}
-              className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-ink-400 hover:text-white font-semibold transition-all"
+              className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-white hover:bg-slate-100 text-slate-600 hover:text-slate-900 font-semibold border border-slate-200 transition-all cursor-pointer"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>{t('साफ़ करें', 'Clear')}</span>
@@ -266,15 +266,15 @@ export const MathCanvasModal: React.FC<MathCanvasModalProps> = ({
 
           {/* Color Palettes */}
           <div className="flex items-center gap-1.5">
-            {['#fbbf24', '#34d399', '#60a5fa', '#f43f5e', '#ffffff'].map((color) => (
+            {['#D97706', '#059669', '#2563EB', '#E11D48', '#0F172A'].map((color) => (
               <button
                 key={color}
                 onClick={() => {
                   setStrokeColor(color);
                   setTool('pen');
                 }}
-                className={`w-6 h-6 rounded-full border-2 transition-transform ${
-                  strokeColor === color && tool === 'pen' ? 'scale-125 border-white' : 'border-transparent'
+                className={`w-6 h-6 rounded-full border-2 transition-transform cursor-pointer ${
+                  strokeColor === color && tool === 'pen' ? 'scale-125 border-slate-900 shadow-sm' : 'border-transparent'
                 }`}
                 style={{ backgroundColor: color }}
                 aria-label={`Color ${color}`}
@@ -285,14 +285,14 @@ export const MathCanvasModal: React.FC<MathCanvasModalProps> = ({
 
         {/* Quick Math Symbol Insert Chips */}
         <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
-          <span className="text-[10px] font-bold text-ink-400 uppercase tracking-wider flex-shrink-0 mr-1">
+          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider flex-shrink-0 mr-1">
             {t('त्वरित चिह्न:', 'Quick Symbols:')}
           </span>
           {mathSymbols.map((sym) => (
             <button
               key={sym}
               onClick={() => insertSymbol(sym)}
-              className="px-2.5 py-1 rounded-lg bg-ink-900 border border-white/10 hover:border-saffron-500/40 text-saffron-300 font-mono text-sm font-bold flex-shrink-0 transition-colors"
+              className="px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200 hover:border-saffron-400 text-slate-800 font-mono text-sm font-bold flex-shrink-0 transition-colors cursor-pointer"
             >
               {sym}
             </button>
@@ -300,7 +300,7 @@ export const MathCanvasModal: React.FC<MathCanvasModalProps> = ({
         </div>
 
         {/* Interactive Drawing Canvas */}
-        <div className="relative rounded-2xl overflow-hidden border border-white/15 shadow-inner touch-none">
+        <div className="relative rounded-2xl overflow-hidden border border-slate-200 shadow-inner touch-none bg-white">
           <canvas
             ref={canvasRef}
             onMouseDown={startDrawing}
@@ -314,7 +314,7 @@ export const MathCanvasModal: React.FC<MathCanvasModalProps> = ({
           />
 
           {!hasDrawn && (
-            <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-center text-ink-500 text-xs">
+            <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-center text-slate-400 text-xs">
               <Edit3 className="w-8 h-8 mb-2 opacity-30 animate-bounce" />
               <span>{t('यहाँ अपनी उंगली या माउस से लिखें...', 'Draw or write equations here...')}</span>
             </div>
@@ -325,7 +325,7 @@ export const MathCanvasModal: React.FC<MathCanvasModalProps> = ({
         <div className="flex items-center justify-between gap-3">
           <button
             onClick={clearCanvas}
-            className="text-xs text-ink-400 hover:text-white px-3 py-2"
+            className="text-xs text-slate-500 hover:text-slate-800 px-3 py-2 cursor-pointer"
           >
             {t('नया पृष्ठ', 'New Canvas')}
           </button>
@@ -333,7 +333,7 @@ export const MathCanvasModal: React.FC<MathCanvasModalProps> = ({
           <button
             onClick={handleSolve}
             disabled={!hasDrawn || isSolving}
-            className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-saffron-500 via-amber-500 to-amber-600 text-ink-950 font-extrabold text-sm shadow-xl shadow-saffron-500/25 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-40 transition-all"
+            className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-saffron-500 via-amber-500 to-amber-600 text-slate-950 font-extrabold text-sm shadow-md shadow-saffron-500/20 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-40 transition-all cursor-pointer"
           >
             {isSolving ? (
               <>
@@ -342,7 +342,7 @@ export const MathCanvasModal: React.FC<MathCanvasModalProps> = ({
               </>
             ) : (
               <>
-                <Sparkles className="w-4 h-4 fill-ink-950" />
+                <Sparkles className="w-4 h-4 fill-slate-950" />
                 <span>{t('AI से चरणबद्ध हल निकालें', 'Solve Step-by-Step with AI')}</span>
               </>
             )}
@@ -351,11 +351,11 @@ export const MathCanvasModal: React.FC<MathCanvasModalProps> = ({
 
         {/* AI Solution Output Panel */}
         {solution && (
-          <div className="p-5 rounded-2xl bg-ink-900/90 border border-saffron-500/30 space-y-4 animate-fade-in">
+          <div className="p-5 rounded-2xl bg-slate-50 border border-amber-200 space-y-4 animate-fade-in shadow-sm">
             {recognizedText && (
-              <div className="text-xs font-mono font-bold text-amber-300 pb-2 border-b border-white/10 flex items-center justify-between">
+              <div className="text-xs font-mono font-bold text-amber-800 pb-2 border-b border-slate-200 flex items-center justify-between">
                 <span>{recognizedText}</span>
-                <span className="text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+                <span className="text-[10px] text-emerald-700 bg-emerald-100/70 px-2 py-0.5 rounded-full border border-emerald-300">
                   {t('सटीकता 98.4%', 'Confidence 98.4%')}
                 </span>
               </div>
@@ -364,11 +364,11 @@ export const MathCanvasModal: React.FC<MathCanvasModalProps> = ({
             {/* Socratic Understanding */}
             {solution.understanding && (
               <div className="space-y-1">
-                <div className="flex items-center gap-1.5 text-xs font-bold text-saffron-400">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-saffron-700">
                   <Lightbulb className="w-3.5 h-3.5" />
                   <span>{t('अवधारणा एवं सूत्र पहचान', 'Concept & Formula Identification')}</span>
                 </div>
-                <p className="text-xs sm:text-sm text-ink-200 leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
                   {solution.understanding}
                 </p>
               </div>
@@ -377,14 +377,14 @@ export const MathCanvasModal: React.FC<MathCanvasModalProps> = ({
             {/* Steps */}
             {solution.steps && solution.steps.length > 0 && (
               <div className="space-y-2">
-                <div className="text-xs font-bold text-ink-300 uppercase tracking-wider">
+                <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">
                   {t('हल के चरण (Step-by-Step)', 'Step-by-Step Solution')}
                 </div>
                 <div className="space-y-2">
                   {solution.steps.map((st, idx) => (
-                    <div key={idx} className="p-2.5 rounded-xl bg-ink-950/60 border border-white/5 text-xs">
-                      <span className="font-bold text-amber-400 mr-2">{st.title}:</span>
-                      <span className="text-ink-200">{st.detail}</span>
+                    <div key={idx} className="p-2.5 rounded-xl bg-white border border-slate-200 text-xs shadow-sm">
+                      <span className="font-bold text-amber-700 mr-2">{st.title}:</span>
+                      <span className="text-slate-700">{st.detail}</span>
                     </div>
                   ))}
                 </div>
@@ -393,11 +393,11 @@ export const MathCanvasModal: React.FC<MathCanvasModalProps> = ({
 
             {/* Final Answer */}
             {solution.finalAnswer && (
-              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30">
-                <div className="text-xs font-bold text-emerald-400 mb-0.5">
+              <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200">
+                <div className="text-xs font-bold text-emerald-800 mb-0.5">
                   🎯 {t('अंतिम उत्तर (Final Roots)', 'Final Roots')}
                 </div>
-                <p className="text-xs sm:text-sm text-white font-bold">
+                <p className="text-xs sm:text-sm text-slate-900 font-bold">
                   {solution.finalAnswer}
                 </p>
               </div>
@@ -414,7 +414,7 @@ export const MathCanvasModal: React.FC<MathCanvasModalProps> = ({
                     );
                     onClose();
                   }}
-                  className="flex items-center gap-1.5 text-xs font-bold text-saffron-400 hover:text-saffron-300"
+                  className="flex items-center gap-1.5 text-xs font-bold text-saffron-700 hover:text-saffron-800 cursor-pointer"
                 >
                   <span>{t('AI ट्यूटर के साथ इसपर और चर्चा करें', 'Discuss further with AI Tutor')}</span>
                   <Send className="w-3.5 h-3.5" />

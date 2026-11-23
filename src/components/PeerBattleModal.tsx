@@ -135,43 +135,43 @@ export const PeerBattleModal: React.FC<PeerBattleModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-ink-950/85 backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-xl glass-panel border border-saffron-500/30 rounded-3xl p-5 sm:p-8 space-y-6 shadow-2xl max-h-[92dvh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/40 backdrop-blur-md animate-fade-in">
+      <div className="relative w-full max-w-xl bg-white border border-slate-200/90 rounded-3xl p-5 sm:p-8 space-y-6 shadow-2xl max-h-[92dvh] overflow-y-auto">
         {/* Close Button */}
         <button
           onClick={onClose}
           aria-label="Close Peer Battle"
-          className="absolute top-4 right-4 p-2 rounded-xl bg-white/5 hover:bg-white/10 text-ink-400 hover:text-white transition-colors"
+          className="absolute top-4 right-4 p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 transition-colors cursor-pointer"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Header */}
         <div className="space-y-1 text-center">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-saffron-500/10 border border-saffron-500/25 text-saffron-400 text-xs font-bold">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-saffron-50 border border-saffron-200 text-saffron-700 text-xs font-bold">
             <Swords className="w-3.5 h-3.5 animate-pulse" />
             <span>{t('1v1 लाइव सोक्रेटिक बैटल', '1v1 Live Socratic Peer Battle')}</span>
           </div>
-          <h2 className="text-xl sm:text-2xl font-extrabold text-white">
+          <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900">
             {t('ज्ञान का मुकाबला', 'Battle of Knowledge')}
           </h2>
-          <p className="text-xs text-ink-300">
+          <p className="text-xs text-slate-500">
             {user.board || 'CBSE'} • {t('कक्षा', 'Class')} {user.grade} • 5 {t('तीव्र प्रश्न', 'Fast-Paced Questions')}
           </p>
         </div>
 
         {/* Competitor Scoreboard Banner */}
-        <div className="p-4 rounded-2xl bg-ink-950/80 border border-white/10 flex items-center justify-between gap-4">
+        <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-4">
           {/* User Side */}
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl bg-saffron-500/10 border border-saffron-500/30 flex items-center justify-center text-2xl">
+            <div className="w-12 h-12 rounded-xl bg-amber-100 border border-amber-300 flex items-center justify-center text-2xl shadow-sm">
               🧑‍🎓
             </div>
             <div>
-              <div className="text-xs font-bold text-white truncate max-w-[100px] sm:max-w-none">
+              <div className="text-xs font-bold text-slate-800 truncate max-w-[100px] sm:max-w-none">
                 {user.name} ({t('आप', 'You')})
               </div>
-              <div className="text-base font-extrabold text-saffron-400 font-mono">
+              <div className="text-base font-extrabold text-saffron-700 font-mono">
                 {userScore} pts
               </div>
             </div>
@@ -179,9 +179,9 @@ export const PeerBattleModal: React.FC<PeerBattleModalProps> = ({
 
           {/* VS & Timer */}
           <div className="flex flex-col items-center">
-            <span className="text-xs font-black text-ink-500 uppercase tracking-widest">VS</span>
+            <span className="text-xs font-black text-slate-400 uppercase tracking-widest">VS</span>
             <div className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-mono font-bold mt-1 ${
-              timeLeft <= 5 ? 'bg-rose-500/20 text-rose-400 animate-bounce' : 'bg-white/5 text-amber-300'
+              timeLeft <= 5 ? 'bg-rose-100 text-rose-700 animate-bounce' : 'bg-amber-100 text-amber-800'
             }`}>
               <Timer className="w-3.5 h-3.5" />
               <span>{timeLeft}s</span>
@@ -190,14 +190,14 @@ export const PeerBattleModal: React.FC<PeerBattleModalProps> = ({
 
           {/* Peer Side */}
           <div className="flex items-center gap-3 text-right flex-row-reverse">
-            <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-2xl">
+            <div className="w-12 h-12 rounded-xl bg-blue-100 border border-blue-300 flex items-center justify-center text-2xl shadow-sm">
               {peer.avatar}
             </div>
             <div>
-              <div className="text-xs font-bold text-white truncate max-w-[100px] sm:max-w-none">
+              <div className="text-xs font-bold text-slate-800 truncate max-w-[100px] sm:max-w-none">
                 {peer.name}
               </div>
-              <div className="text-base font-extrabold text-blue-400 font-mono">
+              <div className="text-base font-extrabold text-blue-700 font-mono">
                 {peerScore} pts
               </div>
             </div>
@@ -208,11 +208,11 @@ export const PeerBattleModal: React.FC<PeerBattleModalProps> = ({
         {!isFinished ? (
           <div className="space-y-4">
             {/* Question Card */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-ink-900/90 border border-white/10 space-y-2">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-saffron-400">
+            <div className="p-4 sm:p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-saffron-700">
                 {t('प्रश्न', 'Question')} #{questionIdx + 1} / {questions.length}
               </span>
-              <h3 className="text-sm sm:text-base font-bold text-white leading-relaxed">
+              <h3 className="text-sm sm:text-base font-bold text-slate-900 leading-relaxed">
                 {t(currentQ.questionHi, currentQ.question)}
               </h3>
             </div>
@@ -220,17 +220,17 @@ export const PeerBattleModal: React.FC<PeerBattleModalProps> = ({
             {/* Options */}
             <div className="grid gap-2.5">
               {currentQ.options.map((opt, idx) => {
-                let btnStyle = 'border-white/10 bg-ink-950/60 text-ink-200 hover:border-saffron-500/30';
+                let btnStyle = 'border-slate-200 bg-white text-slate-700 hover:border-saffron-400 hover:bg-saffron-50/30 shadow-sm';
 
                 if (selectedOpt === idx) {
-                  btnStyle = 'border-saffron-500 bg-saffron-500/10 text-white font-bold';
+                  btnStyle = 'border-saffron-500 bg-saffron-50 text-slate-950 font-bold ring-2 ring-saffron-400/40';
                 }
 
                 if (isAnswered) {
                   if (idx === currentQ.correctIndex) {
-                    btnStyle = 'border-emerald-500 bg-emerald-500/20 text-emerald-300 font-bold';
+                    btnStyle = 'border-emerald-500 bg-emerald-50 text-emerald-900 font-bold ring-2 ring-emerald-400/40';
                   } else if (selectedOpt === idx) {
-                    btnStyle = 'border-rose-500 bg-rose-500/20 text-rose-300 font-bold';
+                    btnStyle = 'border-rose-400 bg-rose-50 text-rose-800 font-bold';
                   }
                 }
 
@@ -239,14 +239,14 @@ export const PeerBattleModal: React.FC<PeerBattleModalProps> = ({
                     key={idx}
                     disabled={isAnswered}
                     onClick={() => handleAnswer(idx)}
-                    className={`w-full p-3.5 rounded-xl border text-left text-xs sm:text-sm transition-all flex items-center justify-between ${btnStyle}`}
+                    className={`w-full p-3.5 rounded-xl border text-left text-xs sm:text-sm transition-all flex items-center justify-between cursor-pointer ${btnStyle}`}
                   >
                     <span>{opt}</span>
                     {isAnswered && idx === currentQ.correctIndex && (
-                      <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0 ml-2" />
+                      <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0 ml-2" />
                     )}
                     {isAnswered && selectedOpt === idx && idx !== currentQ.correctIndex && (
-                      <XCircle className="w-4 h-4 text-rose-400 flex-shrink-0 ml-2" />
+                      <XCircle className="w-4 h-4 text-rose-500 flex-shrink-0 ml-2" />
                     )}
                   </button>
                 );
@@ -255,34 +255,34 @@ export const PeerBattleModal: React.FC<PeerBattleModalProps> = ({
           </div>
         ) : (
           /* Victory / Match Result Screen */
-          <div className="p-6 rounded-2xl bg-gradient-to-b from-amber-500/15 to-ink-950 border border-amber-500/30 text-center space-y-4 animate-fade-in">
-            <Trophy className="w-16 h-16 text-amber-400 mx-auto animate-bounce" />
+          <div className="p-6 rounded-2xl bg-gradient-to-b from-amber-50 to-white border border-amber-200 text-center space-y-4 animate-fade-in shadow-md">
+            <Trophy className="w-16 h-16 text-amber-500 mx-auto animate-bounce" />
             <div className="space-y-1">
-              <h3 className="text-2xl font-black text-white">
+              <h3 className="text-2xl font-black text-slate-900">
                 {userScore >= peerScore
                   ? t('🎉 शानदार विजय! आप विजेता बने!', '🎉 Victory! You Won the Match!')
                   : t('कड़ा मुकाबला! अच्छा प्रयास!', 'Great Effort! Close Match!')}
               </h3>
-              <p className="text-xs text-ink-300">
+              <p className="text-xs text-slate-600">
                 {userScore} pts vs {peerScore} pts
               </p>
             </div>
 
-            <div className="p-3 bg-amber-500/10 rounded-xl border border-amber-500/20 text-xs font-bold text-amber-300 inline-block">
+            <div className="p-3 bg-amber-100/70 rounded-xl border border-amber-300 text-xs font-bold text-amber-900 inline-block">
               +30 {t('बोनस गुरुकुल अंक आपके खाते में जोड़े गए!', 'Bonus Points Added to Profile!')}
             </div>
 
             <div className="flex items-center justify-center gap-3 pt-2">
               <button
                 onClick={resetGame}
-                className="flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-saffron-500 text-ink-950 font-bold text-xs shadow-lg hover:scale-105 active:scale-95 transition-all"
+                className="flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-saffron-500 hover:bg-saffron-600 text-slate-950 font-bold text-xs shadow-md transition-all cursor-pointer"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
                 <span>{t('फिर से खेलें', 'Play Again')}</span>
               </button>
               <button
                 onClick={onClose}
-                className="px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-white font-bold text-xs transition-colors"
+                className="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors cursor-pointer"
               >
                 {t('बंद करें', 'Close')}
               </button>

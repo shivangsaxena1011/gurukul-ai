@@ -29,28 +29,28 @@ export const AuthModal: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink-950/85 backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-md glass-panel border border-saffron-500/30 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-md animate-fade-in">
+      <div className="relative w-full max-w-md bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl">
         {/* Close Button */}
         <button
           onClick={() => setIsAuthModalOpen(false)}
           aria-label="Close Auth Modal"
-          className="absolute top-4 right-4 p-2 rounded-xl bg-white/5 hover:bg-white/10 text-ink-400 hover:text-white transition-colors"
+          className="absolute top-4 right-4 p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 transition-colors cursor-pointer"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Brand Header */}
         <div className="text-center space-y-2">
-          <div className="w-12 h-12 mx-auto rounded-2xl bg-gradient-to-tr from-saffron-500 to-amber-300 p-0.5 shadow-lg shadow-saffron-500/25 flex items-center justify-center">
-            <div className="w-full h-full bg-ink-950 rounded-[14px] flex items-center justify-center">
-              <Sparkles className="w-6 h-6 text-saffron-400" />
+          <div className="w-12 h-12 mx-auto rounded-2xl bg-gradient-to-tr from-saffron-500 to-amber-300 p-0.5 shadow-md shadow-saffron-500/20 flex items-center justify-center">
+            <div className="w-full h-full bg-white rounded-[14px] flex items-center justify-center">
+              <Sparkles className="w-6 h-6 text-saffron-600" />
             </div>
           </div>
-          <h2 className="text-2xl font-black text-white tracking-tight">
+          <h2 className="text-2xl font-black text-slate-900 tracking-tight">
             GURUKUL AI
           </h2>
-          <p className="text-xs sm:text-sm text-ink-300 max-w-xs mx-auto">
+          <p className="text-xs sm:text-sm text-slate-600 max-w-xs mx-auto">
             {t(
               'सीखने की शुरुआत करें — गूगल से सुरक्षित लॉगिन करें या बिना लॉगिन तुरंत आज़माएँ।',
               'Start learning — Sign in securely with Google or try once as a guest immediately.'
@@ -63,7 +63,7 @@ export const AuthModal: React.FC = () => {
           {/* 1. Google Sign-In Button */}
           <button
             onClick={handleGoogleClick}
-            className="w-full py-3.5 px-4 rounded-2xl bg-white hover:bg-slate-100 text-slate-900 font-bold text-sm shadow-xl flex items-center justify-center gap-3 transition-all hover:scale-[1.02] active:scale-[0.98] group"
+            className="w-full py-3.5 px-4 rounded-2xl bg-white hover:bg-slate-50 text-slate-800 font-bold text-sm border border-slate-300 shadow-md flex items-center justify-center gap-3 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path
@@ -88,8 +88,8 @@ export const AuthModal: React.FC = () => {
 
           {/* Divider */}
           <div className="relative flex items-center justify-center py-1">
-            <div className="border-t border-white/10 w-full" />
-            <span className="bg-ink-950 px-3 text-[11px] font-bold text-ink-500 uppercase tracking-wider absolute">
+            <div className="border-t border-slate-200 w-full" />
+            <span className="bg-white px-3 text-[11px] font-bold text-slate-400 uppercase tracking-wider absolute">
               {t('या', 'OR')}
             </span>
           </div>
@@ -97,31 +97,31 @@ export const AuthModal: React.FC = () => {
           {/* 2. Try Once / Guest Access Button */}
           <button
             onClick={handleGuestClick}
-            className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-saffron-500/20 via-amber-500/15 to-emerald-500/20 border border-saffron-500/40 hover:border-saffron-400 text-amber-200 hover:text-white font-extrabold text-sm shadow-md flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98]"
+            className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-saffron-500 to-amber-600 hover:from-saffron-600 hover:to-amber-700 text-slate-950 font-extrabold text-sm shadow-md shadow-saffron-500/20 flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
           >
-            <Compass className="w-4 h-4 text-saffron-400" />
+            <Compass className="w-4 h-4 text-slate-950" />
             <span>{t('बिना लॉगिन सीधे आज़माएँ (Try Once)', 'Try Once without Login (Guest Mode)')}</span>
             <ArrowRight className="w-4 h-4 ml-1" />
           </button>
         </div>
 
         {/* Feature Highlights */}
-        <div className="pt-2 border-t border-white/10 space-y-2 text-xs text-ink-300">
+        <div className="pt-2 border-t border-slate-100 space-y-2 text-xs text-slate-600">
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
             <span>{t('कक्षा 1 से 12 तक सभी NCERT व राज्य बोर्ड पाठ्यक्रम', 'All classes 1 to 12 NCERT & State Board curriculums')}</span>
           </div>
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
             <span>{t('सॉक्रेटिक AI ट्यूटर — समझ पहले, उत्तर बाद में', 'Socratic AI Tutor — Concept hints before final answer')}</span>
           </div>
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
             <span>{t('100% डेटा-मुक्त ऑफलाइन P2P QR अध्ययन', '100% Offline study packs with zero mobile data')}</span>
           </div>
         </div>
 
-        <p className="text-[11px] text-center text-ink-500">
+        <p className="text-[11px] text-center text-slate-400">
           {t('छात्रों के लिए 100% निःशुल्क एवं सुरक्षित शिक्षा', '100% Free & Safe Educational Platform for Students')}
         </p>
       </div>

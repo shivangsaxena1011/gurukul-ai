@@ -174,27 +174,27 @@ export const VoiceModal: React.FC<VoiceModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-ink-950/85 backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-md glass-panel border border-saffron-500/30 rounded-2xl sm:rounded-3xl p-5 sm:p-8 text-center space-y-5 sm:space-y-6 shadow-2xl max-h-[90dvh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/40 backdrop-blur-md animate-fade-in">
+      <div className="relative w-full max-w-md bg-white border border-slate-200/90 rounded-2xl sm:rounded-3xl p-5 sm:p-8 text-center space-y-5 sm:space-y-6 shadow-2xl max-h-[90dvh] overflow-y-auto">
         {/* Close Button */}
         <button
           onClick={onClose}
           aria-label="Close Voice Modal"
-          className="absolute top-4 right-4 p-2 rounded-xl bg-white/5 hover:bg-white/10 text-ink-400 hover:text-white transition-colors"
+          className="absolute top-4 right-4 p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 transition-colors cursor-pointer"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Modal Header */}
         <div className="space-y-1">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold">
             <Radio className="w-3.5 h-3.5 animate-pulse" />
             <span>{t('लाइव वॉयस ट्यूटर', 'Live Voice Recognition')}</span>
           </div>
-          <h2 className="text-xl font-extrabold text-white">
+          <h2 className="text-xl font-extrabold text-slate-900">
             {t('अपनी भाषा में बोलें', 'Speak in your language')}
           </h2>
-          <p className="text-xs text-ink-300">
+          <p className="text-xs text-slate-600">
             {t('हिंदी, अंग्रेजी या हिंग्लिश में कोई भी सवाल पूछें।', 'Ask any academic question naturally.')}
           </p>
         </div>
@@ -212,8 +212,8 @@ export const VoiceModal: React.FC<VoiceModalProps> = ({
           <div
             className={`absolute w-28 h-28 rounded-full transition-all duration-300 ${
               isRecording
-                ? 'bg-saffron-500/15 border border-saffron-500/30 animate-pulse'
-                : 'bg-white/5'
+                ? 'bg-saffron-100/70 border border-saffron-300 animate-pulse'
+                : 'bg-slate-100'
             }`}
           />
 
@@ -226,35 +226,35 @@ export const VoiceModal: React.FC<VoiceModalProps> = ({
                 startVoiceSession();
               }
             }}
-            className={`relative z-10 w-20 h-20 rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 ${
+            className={`relative z-10 w-20 h-20 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 cursor-pointer ${
               isRecording
-                ? 'bg-gradient-to-tr from-saffron-500 via-amber-400 to-amber-500 text-ink-950 scale-105 shadow-saffron-500/40'
-                : 'bg-ink-900 border border-white/20 text-ink-300 hover:text-white hover:scale-105'
+                ? 'bg-gradient-to-tr from-saffron-500 via-amber-400 to-amber-500 text-slate-950 scale-105 shadow-saffron-500/30'
+                : 'bg-slate-100 border border-slate-300 text-slate-600 hover:text-slate-900 hover:scale-105'
             }`}
           >
             {isRecording ? (
-              <Mic className="w-9 h-9 animate-pulse" />
+              <Mic className="w-9 h-9 animate-pulse text-slate-950" />
             ) : (
               <MicOff className="w-9 h-9" />
             )}
           </button>
 
           {/* Recording Timer */}
-          <div className="mt-4 flex items-center gap-2 text-xs font-mono font-bold text-ink-400">
-            <span className={`w-2 h-2 rounded-full ${isRecording ? 'bg-rose-500 animate-ping' : 'bg-ink-600'}`} />
+          <div className="mt-4 flex items-center gap-2 text-xs font-mono font-bold text-slate-500">
+            <span className={`w-2 h-2 rounded-full ${isRecording ? 'bg-rose-500 animate-ping' : 'bg-slate-400'}`} />
             <span>00:{timer.toString().padStart(2, '0')}</span>
           </div>
         </div>
 
         {/* Real Dynamic Audio Levels Waveform */}
-        <div className="flex items-center justify-center gap-1.5 h-10 px-4 py-2 bg-ink-950/60 rounded-2xl border border-white/5">
+        <div className="flex items-center justify-center gap-1.5 h-10 px-4 py-2 bg-slate-50 rounded-2xl border border-slate-200">
           {audioLevels.map((lvl, idx) => (
             <div
               key={idx}
               className={`w-1.5 rounded-full transition-all duration-100 ${
                 isRecording
-                  ? 'bg-gradient-to-t from-saffron-500 to-emerald-400'
-                  : 'bg-white/10'
+                  ? 'bg-gradient-to-t from-saffron-500 to-emerald-500'
+                  : 'bg-slate-200'
               }`}
               style={{ height: isRecording ? `${lvl}%` : '20%' }}
             />
@@ -262,15 +262,15 @@ export const VoiceModal: React.FC<VoiceModalProps> = ({
         </div>
 
         {/* Live Transcript Display with Blinking Cursor */}
-        <div className="min-h-[72px] p-4 rounded-2xl bg-ink-950/80 border border-white/10 flex items-center justify-center text-center">
+        <div className="min-h-[72px] p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center text-center">
           {transcript ? (
-            <p className="text-sm font-semibold text-white leading-relaxed">
+            <p className="text-sm font-semibold text-slate-900 leading-relaxed">
               "{transcript}"
-              {isRecording && <span className="inline-block w-1.5 h-4 ml-1 bg-saffron-400 animate-pulse" />}
+              {isRecording && <span className="inline-block w-1.5 h-4 ml-1 bg-saffron-600 animate-pulse" />}
             </p>
           ) : (
-            <div className="flex items-center gap-2 text-xs text-ink-500 italic">
-              <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+            <div className="flex items-center gap-2 text-xs text-slate-500 italic">
+              <RefreshCw className="w-3.5 h-3.5 animate-spin text-slate-400" />
               <span>{t('आपकी आवाज़ सुनी जा रही है… बोलिए', 'Listening to your voice… speak now')}</span>
             </div>
           )}
@@ -280,7 +280,7 @@ export const VoiceModal: React.FC<VoiceModalProps> = ({
         <div className="flex items-center gap-3 pt-2">
           <button
             onClick={onClose}
-            className="flex-1 py-3 rounded-2xl bg-white/5 hover:bg-white/10 text-ink-300 hover:text-white font-bold text-xs transition-colors"
+            className="flex-1 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 font-bold text-xs transition-colors cursor-pointer"
           >
             {t('रद्द करें', 'Cancel')}
           </button>
@@ -288,7 +288,7 @@ export const VoiceModal: React.FC<VoiceModalProps> = ({
           <button
             onClick={handleConfirm}
             disabled={!transcript.trim()}
-            className="flex-1 py-3 rounded-2xl bg-gradient-to-r from-saffron-500 to-amber-600 text-ink-950 font-extrabold text-xs shadow-xl shadow-saffron-500/25 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-40 transition-all flex items-center justify-center gap-1.5"
+            className="flex-1 py-3 rounded-2xl bg-gradient-to-r from-saffron-500 to-amber-600 text-slate-950 font-extrabold text-xs shadow-md shadow-saffron-500/20 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-40 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <Check className="w-4 h-4" />
             <span>{t('AI ट्यूटर से पूछें', 'Ask AI Tutor')}</span>

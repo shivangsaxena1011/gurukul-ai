@@ -59,8 +59,8 @@ export const OfflineQRShareModal: React.FC<OfflineQRShareModalProps> = ({
         width: 280,
         margin: 2,
         color: {
-          dark: '#0B0F19',
-          light: '#FDE68A'
+          dark: '#0F172A',
+          light: '#FFFFFF'
         }
       });
       setQrDataUrl(url);
@@ -115,27 +115,27 @@ export const OfflineQRShareModal: React.FC<OfflineQRShareModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-ink-950/85 backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-lg glass-panel border border-emerald-500/30 rounded-3xl p-5 sm:p-8 space-y-6 shadow-2xl max-h-[92dvh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/40 backdrop-blur-md animate-fade-in">
+      <div className="relative w-full max-w-lg bg-white border border-slate-200/90 rounded-3xl p-5 sm:p-8 space-y-6 shadow-2xl max-h-[92dvh] overflow-y-auto">
         {/* Close Button */}
         <button
           onClick={onClose}
           aria-label="Close QR Share"
-          className="absolute top-4 right-4 p-2 rounded-xl bg-white/5 hover:bg-white/10 text-ink-400 hover:text-white transition-colors"
+          className="absolute top-4 right-4 p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 transition-colors cursor-pointer"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Header */}
         <div className="space-y-1 text-center">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-xs font-bold">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold">
             <WifiOff className="w-3.5 h-3.5" />
             <span>{t('0% डेटा: P2P ऑफ़लाइन QR शेयरिंग', 'Zero-Data P2P QR Pack Sharing')}</span>
           </div>
-          <h2 className="text-xl sm:text-2xl font-extrabold text-white">
+          <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900">
             {t('बिना इंटरनेट पैक साझा करें', 'Share Offline Packs Device-to-Device')}
           </h2>
-          <p className="text-xs text-ink-300">
+          <p className="text-xs text-slate-600">
             {t(
               'एक फोन से दूसरे फोन में QR कोड स्कैन करके बिना किसी इंटरनेट या मोबाइल डेटा के पूरे चैप्टर पैक्स ट्रांसफर करें।',
               'Transfer entire chapter question packs between student phones via QR without cellular data.'
@@ -144,23 +144,23 @@ export const OfflineQRShareModal: React.FC<OfflineQRShareModalProps> = ({
         </div>
 
         {/* Tab Toggle */}
-        <div className="flex rounded-2xl bg-ink-900/80 p-1 border border-white/10 text-xs font-bold">
+        <div className="flex rounded-2xl bg-slate-100 p-1 border border-slate-200 text-xs font-bold">
           <button
             onClick={() => setMode('SHARE')}
-            className={`flex-1 py-2 rounded-xl transition-all ${
+            className={`flex-1 py-2 rounded-xl transition-all cursor-pointer ${
               mode === 'SHARE'
-                ? 'bg-gradient-to-r from-saffron-500 to-amber-600 text-ink-950 shadow-md'
-                : 'text-ink-400 hover:text-white'
+                ? 'bg-gradient-to-r from-saffron-500 to-amber-600 text-slate-950 font-extrabold shadow-sm'
+                : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             {t('QR कोड दिखाएं (Share)', 'Show QR Code (Share)')}
           </button>
           <button
             onClick={() => setMode('IMPORT')}
-            className={`flex-1 py-2 rounded-xl transition-all ${
+            className={`flex-1 py-2 rounded-xl transition-all cursor-pointer ${
               mode === 'IMPORT'
-                ? 'bg-gradient-to-r from-saffron-500 to-amber-600 text-ink-950 shadow-md'
-                : 'text-ink-400 hover:text-white'
+                ? 'bg-gradient-to-r from-saffron-500 to-amber-600 text-slate-950 font-extrabold shadow-sm'
+                : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             {t('QR / कोड से प्राप्त करें (Import)', 'Receive Pack (Import)')}
@@ -172,7 +172,7 @@ export const OfflineQRShareModal: React.FC<OfflineQRShareModalProps> = ({
           <div className="flex flex-col items-center justify-center space-y-4">
             {pack ? (
               <>
-                <div className="p-3 bg-white rounded-2xl shadow-xl border-4 border-amber-400">
+                <div className="p-3 bg-white rounded-2xl shadow-xl border-4 border-amber-300">
                   {qrDataUrl ? (
                     <img
                       src={qrDataUrl}
@@ -180,15 +180,15 @@ export const OfflineQRShareModal: React.FC<OfflineQRShareModalProps> = ({
                       className="w-52 h-52 sm:w-60 sm:h-60 rounded-xl"
                     />
                   ) : (
-                    <div className="w-52 h-52 flex items-center justify-center text-xs text-ink-500">
+                    <div className="w-52 h-52 flex items-center justify-center text-xs text-slate-400">
                       QR कोड बन रहा है…
                     </div>
                   )}
                 </div>
 
                 <div className="text-center space-y-0.5">
-                  <div className="text-sm font-extrabold text-white">{pack.title}</div>
-                  <div className="text-xs text-ink-400">
+                  <div className="text-sm font-extrabold text-slate-900">{pack.title}</div>
+                  <div className="text-xs text-slate-500">
                     {pack.questionsCount} {t('प्रश्न', 'Questions')} • {t('कक्षा', 'Class')} {pack.grade}
                   </div>
                 </div>
@@ -196,9 +196,9 @@ export const OfflineQRShareModal: React.FC<OfflineQRShareModalProps> = ({
                 <div className="flex items-center gap-2 pt-1">
                   <button
                     onClick={handleCopyPayload}
-                    className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-bold text-white border border-white/10 transition-colors"
+                    className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-800 border border-slate-200 transition-colors cursor-pointer"
                   >
-                    {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                    {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
                     <span>{copied ? t('कॉपी हुआ!', 'Copied Payload!') : t('पैक कोड कॉपी करें', 'Copy Code')}</span>
                   </button>
 
@@ -206,7 +206,7 @@ export const OfflineQRShareModal: React.FC<OfflineQRShareModalProps> = ({
                     <a
                       href={qrDataUrl}
                       download={`${pack.slug}-qr.png`}
-                      className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-xs font-bold text-amber-300 border border-amber-500/30 transition-colors"
+                      className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-xs font-bold text-amber-800 border border-amber-200 transition-colors cursor-pointer"
                     >
                       <Download className="w-4 h-4" />
                       <span>{t('QR डाउनलोड करें', 'Save QR')}</span>
@@ -215,7 +215,7 @@ export const OfflineQRShareModal: React.FC<OfflineQRShareModalProps> = ({
                 </div>
               </>
             ) : (
-              <div className="text-center text-xs text-ink-400 py-8">
+              <div className="text-center text-xs text-slate-500 py-8">
                 {t('कृपया पहले एक चैप्टर पैक चुनें', 'Select an offline chapter pack first')}
               </div>
             )}
@@ -225,9 +225,9 @@ export const OfflineQRShareModal: React.FC<OfflineQRShareModalProps> = ({
         {/* Mode 2: IMPORT QR */}
         {mode === 'IMPORT' && (
           <div className="space-y-4">
-            <div className="p-4 rounded-2xl bg-ink-900/90 border border-white/10 space-y-3">
-              <label className="text-xs font-bold text-ink-300 flex items-center gap-1.5">
-                <Upload className="w-4 h-4 text-emerald-400" />
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+              <label className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                <Upload className="w-4 h-4 text-emerald-600" />
                 <span>{t('साझा किया गया कोड यहाँ पेस्ट करें:', 'Paste Pack Code / Scanned Text:')}</span>
               </label>
               <textarea
@@ -235,16 +235,16 @@ export const OfflineQRShareModal: React.FC<OfflineQRShareModalProps> = ({
                 value={importPayload}
                 onChange={(e) => setImportPayload(e.target.value)}
                 placeholder='{"g_id":"GURUKUL_P2P","slug":"real-numbers","title":"वास्तविक संख्याएँ"...}'
-                className="w-full bg-ink-950 border border-white/10 rounded-xl p-3 text-xs font-mono text-white focus:outline-none focus:border-emerald-500"
+                className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs font-mono text-slate-900 focus:outline-none focus:border-emerald-500 shadow-inner"
               />
 
               <button
                 onClick={handleImport}
                 disabled={!importPayload.trim()}
-                className="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-ink-950 font-extrabold text-xs shadow-lg hover:scale-[1.01] active:scale-[0.99] disabled:opacity-40 transition-all"
+                className="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-slate-950 font-extrabold text-xs shadow-md shadow-emerald-500/20 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-40 transition-all cursor-pointer"
               >
                 {importSuccess ? (
-                  <span className="flex items-center justify-center gap-1 text-ink-950">
+                  <span className="flex items-center justify-center gap-1 text-slate-950">
                     <CheckCircle2 className="w-4 h-4" />
                     {t('पैक सफलतापूर्वक इंस्टॉल हुआ!', 'Pack Successfully Installed!')}
                   </span>

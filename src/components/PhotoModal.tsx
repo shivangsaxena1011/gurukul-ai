@@ -111,27 +111,27 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-ink-950/85 backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-lg glass-panel border border-blue-500/30 rounded-2xl sm:rounded-3xl p-5 sm:p-8 space-y-5 sm:space-y-6 shadow-2xl max-h-[90dvh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/40 backdrop-blur-md animate-fade-in">
+      <div className="relative w-full max-w-lg bg-white border border-slate-200/90 rounded-2xl sm:rounded-3xl p-5 sm:p-8 space-y-5 sm:space-y-6 shadow-2xl max-h-[90dvh] overflow-y-auto">
         {/* Close Button */}
         <button
           onClick={onClose}
           aria-label="Close Photo Modal"
-          className="absolute top-4 right-4 p-2 rounded-xl bg-white/5 hover:bg-white/10 text-ink-400 hover:text-white transition-colors"
+          className="absolute top-4 right-4 p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 transition-colors cursor-pointer"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Modal Header */}
         <div className="text-center space-y-1">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold">
             <Camera className="w-3.5 h-3.5" />
             <span>{t('फोटो से सवाल पूछें (Vision OCR)', 'Photo OCR Question Scanner')}</span>
           </div>
-          <h2 className="text-xl font-extrabold text-white">
+          <h2 className="text-xl font-extrabold text-slate-900">
             {t('किताब या कॉपी की तस्वीर लें', 'Capture or Upload Question')}
           </h2>
-          <p className="text-xs text-ink-300">
+          <p className="text-xs text-slate-600">
             {t('Qwen Vision AI तस्वीर के देवनागरी अक्षर व आकृतियों को सटीक रूप से पढ़ता है।', 'Vision AI scans textbook diagrams, Devanagari text, and equations.')}
           </p>
         </div>
@@ -141,7 +141,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
           <div className="space-y-4">
             <div
               onClick={() => fileInputRef.current?.click()}
-              className="border-2 border-dashed border-white/20 rounded-2xl p-7 text-center cursor-pointer hover:border-saffron-500/50 hover:bg-saffron-500/5 transition-all group"
+              className="border-2 border-dashed border-slate-300 rounded-2xl p-7 text-center cursor-pointer hover:border-saffron-500 hover:bg-saffron-50/20 transition-all group"
             >
               <input
                 type="file"
@@ -150,20 +150,20 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
                 accept="image/*"
                 className="hidden"
               />
-              <div className="w-14 h-14 mx-auto rounded-2xl bg-ink-900 border border-white/10 flex items-center justify-center text-ink-400 group-hover:text-saffron-400 group-hover:scale-110 transition-all mb-2">
+              <div className="w-14 h-14 mx-auto rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-500 group-hover:text-saffron-600 group-hover:scale-110 transition-all mb-2">
                 <Upload className="w-7 h-7" />
               </div>
-              <p className="text-sm font-bold text-white mb-0.5">
+              <p className="text-sm font-bold text-slate-800 mb-0.5">
                 {t('किताब की फोटो यहाँ अपलोड करें', 'Click to upload or take textbook photo')}
               </p>
-              <p className="text-[11px] text-ink-400">
+              <p className="text-[11px] text-slate-500">
                 JPG, PNG, WEBP, HEIC (कक्षा 1–12 पाठ्यक्रम)
               </p>
             </div>
 
             {/* Quick Sample Questions Bar */}
             <div className="space-y-2">
-              <span className="text-[11px] font-bold text-ink-400 uppercase tracking-wider block">
+              <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
                 {t('या तैयार पाठ्यपुस्तक प्रश्न से टेस्ट करें:', 'Or test with a sample textbook problem:')}
               </span>
               <div className="grid gap-1.5">
@@ -171,10 +171,10 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
                   <button
                     key={idx}
                     onClick={() => handleSelectSample(s)}
-                    className="p-2.5 rounded-xl bg-ink-950/70 border border-white/5 hover:border-blue-500/40 text-left text-xs text-ink-200 hover:text-white transition-all flex items-center justify-between"
+                    className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-blue-400 hover:bg-blue-50/40 text-left text-xs text-slate-700 hover:text-slate-900 transition-all flex items-center justify-between cursor-pointer"
                   >
                     <span>{language === 'en' ? s.titleEn : s.titleHi}</span>
-                    <Scan className="w-3.5 h-3.5 text-blue-400 flex-shrink-0 ml-2" />
+                    <Scan className="w-3.5 h-3.5 text-blue-600 flex-shrink-0 ml-2" />
                   </button>
                 ))}
               </div>
@@ -183,23 +183,23 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
         ) : (
           <div className="space-y-4">
             {/* Scanned Image Preview with High-Tech Laser & Bounding Box */}
-            <div className="relative rounded-2xl overflow-hidden border border-white/10 max-h-52 bg-ink-950 flex items-center justify-center">
+            <div className="relative rounded-2xl overflow-hidden border border-slate-200 max-h-52 bg-slate-100 flex items-center justify-center shadow-inner">
               <img
                 src={selectedImage}
                 alt="Selected Question"
-                className="w-full h-full object-cover max-h-52 opacity-85"
+                className="w-full h-full object-cover max-h-52 opacity-90"
               />
 
               {/* Bounding Box Simulation */}
-              <div className="absolute inset-4 border-2 border-emerald-400/60 rounded-lg pointer-events-none">
-                <span className="absolute top-1 left-1 bg-ink-950/80 text-[9px] font-mono font-bold text-emerald-400 px-1.5 py-0.5 rounded">
+              <div className="absolute inset-4 border-2 border-emerald-500 rounded-lg pointer-events-none">
+                <span className="absolute top-1 left-1 bg-white/90 text-[9px] font-mono font-bold text-emerald-700 px-1.5 py-0.5 rounded shadow-sm border border-emerald-200">
                   {confidence ? `${confidence}% CONFIDENCE` : 'SCANNING REGION'}
                 </span>
               </div>
 
               {/* Laser Scanning Line */}
               {scanning && (
-                <div className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-blue-400 to-transparent shadow-[0_0_20px_#60a5fa] animate-[bounce_1.2s_infinite]" />
+                <div className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent shadow-[0_0_20px_#3b82f6] animate-[bounce_1.2s_infinite]" />
               )}
 
               <button
@@ -208,7 +208,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
                   setExtractedText('');
                   setConfidence(null);
                 }}
-                className="absolute top-2 right-2 px-2.5 py-1 rounded-lg bg-ink-950/90 text-xs font-bold text-ink-300 hover:text-white border border-white/10"
+                className="absolute top-2 right-2 px-2.5 py-1 rounded-lg bg-white/90 text-xs font-bold text-slate-700 hover:text-slate-950 border border-slate-200 shadow-sm cursor-pointer"
               >
                 {t('बदलें', 'Change')}
               </button>
@@ -216,7 +216,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
 
             {/* Scanning Status */}
             {scanning && (
-              <div className="flex items-center justify-center gap-2 text-xs font-bold text-blue-400 py-1">
+              <div className="flex items-center justify-center gap-2 text-xs font-bold text-blue-600 py-1">
                 <RefreshCw className="w-4 h-4 animate-spin" />
                 <span>{t('Vision AI तस्वीर पढ़ रहा है…', 'Reading Devanagari text & formulas…')}</span>
               </div>
@@ -225,13 +225,13 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
             {/* Extracted Text Box (Editable by student) */}
             {extractedText && (
               <div className="space-y-2 animate-fade-in">
-                <div className="flex items-center justify-between text-xs font-bold text-ink-300">
-                  <span className="flex items-center gap-1.5 text-emerald-400">
-                    <Check className="w-3.5 h-3.5" />
+                <div className="flex items-center justify-between text-xs font-bold text-slate-600">
+                  <span className="flex items-center gap-1.5 text-emerald-700">
+                    <Check className="w-3.5 h-3.5 text-emerald-600" />
                     <span>{t('पहचाना गया प्रश्न (आवश्यकतानुसार सम्पादित करें):', 'Extracted Question (Editable):')}</span>
                   </span>
                   {confidence && (
-                    <span className="text-[10px] text-ink-400 font-mono">
+                    <span className="text-[10px] text-slate-500 font-mono">
                       सटीकता: {confidence}%
                     </span>
                   )}
@@ -240,7 +240,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
                   rows={3}
                   value={extractedText}
                   onChange={(e) => setExtractedText(e.target.value)}
-                  className="w-full bg-ink-950 border border-white/10 rounded-2xl p-3 text-xs sm:text-sm text-white font-medium focus:outline-none focus:border-blue-500"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs sm:text-sm text-slate-900 font-medium focus:outline-none focus:border-blue-500 shadow-inner"
                 />
               </div>
             )}
@@ -249,7 +249,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
             <div className="flex items-center gap-3 pt-1">
               <button
                 onClick={onClose}
-                className="flex-1 py-3 rounded-2xl bg-white/5 hover:bg-white/10 text-ink-300 hover:text-white font-bold text-xs transition-colors"
+                className="flex-1 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 font-bold text-xs transition-colors cursor-pointer"
               >
                 {t('रद्द करें', 'Cancel')}
               </button>
@@ -257,7 +257,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
               <button
                 onClick={handleConfirm}
                 disabled={!extractedText.trim() || scanning}
-                className="flex-1 py-3 rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-extrabold text-xs shadow-xl shadow-blue-500/25 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-40 transition-all flex items-center justify-center gap-1.5"
+                className="flex-1 py-3 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-extrabold text-xs shadow-md shadow-blue-500/20 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-40 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <Sparkles className="w-4 h-4 fill-white" />
                 <span>{t('AI ट्यूटर से पूछें', 'Ask AI Tutor')}</span>

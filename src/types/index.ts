@@ -64,11 +64,19 @@ export interface TutorStep {
 
 export interface StructuredTutorResponse {
   reply?: string;
+  conceptSnap?: string; // 3-second quick big-picture clarity
   understanding?: string;
   hint?: string;
+  keyFormula?: string; // High-yield formula, equation, or theorem
   explanation?: string;
   steps?: TutorStep[];
+  examTip?: string; // Common exam trap / mark-saving tip
   finalAnswer?: string;
+  selfCheckChallenge?: {
+    question: string;
+    answer: string;
+  };
+  efficiencySummary?: string[]; // 3 rapid memory anchors
   followUp?: string[];
   demo?: boolean;
   outOfSyllabus?: boolean;

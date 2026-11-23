@@ -60,7 +60,7 @@ const AppContent: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0B0F19] text-ink-100 selection:bg-saffron-500 selection:text-ink-950">
+    <div className="min-h-screen flex flex-col bg-[#F8FAFC] text-slate-800 selection:bg-amber-200 selection:text-amber-950">
       {/* Top Navigation */}
       <Navbar
         activeTab={activeTab}
@@ -149,24 +149,24 @@ const AppContent: React.FC = () => {
       <AuthModal />
 
       {/* Footer & Developer Attribution */}
-      <footer className="border-t border-white/5 py-8 px-4 text-center text-xs text-ink-500 space-y-3 bg-ink-950/60">
-        <div className="flex items-center justify-center gap-1.5 font-bold text-ink-300">
-          <Sparkles className="w-3.5 h-3.5 text-saffron-400" />
+      <footer className="border-t border-slate-200 py-8 px-4 text-center text-xs text-slate-500 space-y-3 bg-white">
+        <div className="flex items-center justify-center gap-1.5 font-bold text-slate-700">
+          <Sparkles className="w-3.5 h-3.5 text-amber-500" />
           <span>GURUKUL AI — {t('झारखंड एवं भारत के छात्रों को समर्पित', 'Dedicated to students across Jharkhand and India')}</span>
         </div>
 
         {/* Developer Attribution Card (Clean, No Profile Links) */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/5 border border-white/10 text-xs shadow-md">
-          <Code2 className="w-4 h-4 text-saffron-400" />
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-slate-50 border border-slate-200 text-xs shadow-sm">
+          <Code2 className="w-4 h-4 text-amber-500" />
           <span>
             {t('वास्तुकार एवं मुख्य डेवलपर:', 'Architected & Developed by:')}{' '}
-            <strong className="font-extrabold text-amber-300">
+            <strong className="font-extrabold text-slate-900">
               Shivang Saxena
             </strong>
           </span>
         </div>
 
-        <p className="text-[11px] text-ink-500">
+        <p className="text-[11px] text-slate-400">
           {t(
             'सॉक्रेटिक संकेत आधारित शिक्षण • 3D इंटरैक्टिव शिक्षा • पूर्णतः ऑफलाइन P2P QR सक्षम • बोर्ड परीक्षा प्रेडिक्टर',
             'Socratic Hint-First AI • 3D Interactive Learning • 100% Offline P2P QR Enabled • Board Exam Predictor'
