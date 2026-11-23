@@ -11,6 +11,9 @@ export interface GradeTier {
 export interface UserProfile {
   id: string;
   name: string;
+  email?: string;
+  photoURL?: string;
+  isGuest?: boolean;
   role: 'student' | 'guardian';
   grade: number; // 1 to 12
   board: string; // e.g. 'CBSE', 'ICSE', 'JCERT', 'BSEB', 'UPMSP'

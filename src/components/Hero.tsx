@@ -15,7 +15,8 @@ import {
   ArrowRight,
   Edit3,
   Swords,
-  Target
+  Target,
+  Compass
 } from 'lucide-react';
 
 interface HeroProps {
@@ -93,6 +94,16 @@ export const Hero: React.FC<HeroProps> = ({
                 <Camera className="w-4 h-4 text-blue-400" />
                 <span>{t('फोटो से पूछें', 'Snap Photo')}</span>
               </button>
+
+              {user.isGuest && (
+                <button
+                  onClick={onExploreChapters}
+                  className="flex items-center gap-2 px-4 py-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 font-bold text-sm hover:bg-emerald-500/20 hover:border-emerald-400 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+                >
+                  <Compass className="w-4 h-4 text-emerald-400" />
+                  <span>{t('बिना लॉगिन आज़माएँ (Try Once)', 'Try Once (No Login)')}</span>
+                </button>
+              )}
             </div>
 
             {/* Quick Feature Launch Strip */}

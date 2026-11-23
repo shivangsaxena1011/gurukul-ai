@@ -15,11 +15,12 @@ import { MathCanvasModal } from './components/MathCanvasModal';
 import { AudioPodcastModal } from './components/AudioPodcastModal';
 import { ExamPredictorModal } from './components/ExamPredictorModal';
 import { PeerBattleModal } from './components/PeerBattleModal';
+import { AuthModal } from './components/AuthModal';
 import { Chapter } from './types';
 import { Sparkles, Heart, Code2 } from 'lucide-react';
 
 const AppContent: React.FC = () => {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
   const [activeTab, setActiveTab] = useState<'home' | 'tutor' | 'practice' | 'offline' | 'guardian'>('home');
   const [isVoiceOpen, setIsVoiceOpen] = useState(false);
   const [isPhotoOpen, setIsPhotoOpen] = useState(false);
@@ -46,7 +47,10 @@ const AppContent: React.FC = () => {
   };
 
   const handleAskAboutChapter = (chapterTitle: string) => {
-    setTutorInitialQuery(`${chapterTitle} के मुख्य बिंदु और उदाहरण सरल हिंदी में समझाइए।`);
+    const q = language === 'en'
+      ? `Explain the core concepts, key formulas, and exam examples for ${chapterTitle}.`
+      : `${chapterTitle} के मुख्य बिंदु और उदाहरण सरल भाषा में समझाइए।`;
+    setTutorInitialQuery(q);
     setActiveTab('tutor');
   };
 
@@ -69,13 +73,16 @@ const AppContent: React.FC = () => {
           <>
             <Hero
               onStartTutor={handleStartTutorWithMode}
-              onExploreChapters={() => {}}
+              onExploreChapters={() => {
+                const el = document.getElementById('curriculum-section');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
               onOpenMathCanvas={() => setIsMathCanvasOpen(true)}
               onOpenPeerBattle={() => setIsPeerBattleOpen(true)}
               onOpenExamPredictor={() => setIsExamPredictorOpen(true)}
             />
             <ChapterList
-              onSelectChapter={(ch) => handleAskAboutChapter(ch.titleHi)}
+              onSelectChapter={(ch) => handleAskAboutChapter(language === 'en' ? ch.title : ch.titleHi)}
               onAskTutorAboutChapter={handleAskAboutChapter}
               onOpenPodcast={handleOpenPodcast}
             />
@@ -139,6 +146,7 @@ const AppContent: React.FC = () => {
       />
 
       <OnboardingModal />
+      <AuthModal />
 
       {/* Footer & Developer Attribution */}
       <footer className="border-t border-white/5 py-8 px-4 text-center text-xs text-ink-500 space-y-3 bg-ink-950/60">

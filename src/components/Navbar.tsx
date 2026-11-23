@@ -13,7 +13,10 @@ import {
   MessageSquare,
   Download,
   Users,
-  Code2
+  Code2,
+  LogIn,
+  LogOut,
+  User
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -23,7 +26,15 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
   const { language, setLanguage, t } = useLanguage();
-  const { user, isOnline, toggleOfflineMode, pendingSyncCount, setIsOnboardingOpen } = useAuth();
+  const {
+    user,
+    isOnline,
+    toggleOfflineMode,
+    pendingSyncCount,
+    setIsOnboardingOpen,
+    setIsAuthModalOpen,
+    signOutUser
+  } = useAuth();
 
   const navItems = [
     { id: 'home', labelHi: 'होम', labelEn: 'Home', icon: Home },
@@ -141,9 +152,39 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
               </select>
             </div>
 
+            {/* Google Auth / Guest Mode Status */}
+            {user.isGuest ? (
+              <button
+                onClick={() => setIsAuthModalOpen(true)}
+                title={t('Google से लॉगिन करें', 'Sign in with Google to save progress')}
+                className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-gradient-to-r from-saffron-500 to-amber-600 text-ink-950 font-extrabold text-xs shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer"
+              >
+                <LogIn className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">{t('लॉगिन करें', 'Sign In')}</span>
+              </button>
+            ) : (
+              <div className="flex items-center gap-1.5 bg-ink-900 border border-white/10 px-2 py-1 rounded-xl text-xs">
+                {user.photoURL ? (
+                  <img src={user.photoURL} alt={user.name} className="w-5 h-5 rounded-full object-cover" />
+                ) : (
+                  <div className="w-5 h-5 rounded-full bg-saffron-500 text-ink-950 font-bold flex items-center justify-center text-[10px]">
+                    {user.name.charAt(0)}
+                  </div>
+                )}
+                <span className="hidden md:inline font-bold text-white max-w-[80px] truncate">{user.name}</span>
+                <button
+                  onClick={signOutUser}
+                  title={t('लॉगआउट', 'Sign Out')}
+                  className="text-ink-400 hover:text-rose-400 ml-0.5 p-0.5 transition-colors"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            )}
+
             {/* Developer Credit Badge */}
             <div
-              className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-ink-900 border border-saffron-500/20 text-xs font-semibold text-ink-300 shadow-sm select-none"
+              className="hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-ink-900 border border-saffron-500/20 text-xs font-semibold text-ink-300 shadow-sm select-none"
             >
               <Code2 className="w-3.5 h-3.5 text-saffron-400" />
               <span>Dev: <strong className="text-white font-bold">Shivang Saxena</strong></span>

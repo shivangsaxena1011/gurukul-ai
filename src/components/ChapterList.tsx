@@ -67,7 +67,7 @@ export const ChapterList: React.FC<ChapterListProps> = ({
   };
 
   return (
-    <section className="max-w-7xl mx-auto px-4 lg:px-8 py-10 space-y-10">
+    <section id="curriculum-section" className="max-w-7xl mx-auto px-4 lg:px-8 py-10 space-y-10">
       {/* Section Header */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
