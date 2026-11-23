@@ -96,8 +96,8 @@ export const VoiceModal: React.FC<VoiceModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink-950/80 backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-md glass-panel border border-saffron-500/30 rounded-3xl p-6 sm:p-8 text-center space-y-6 shadow-2xl overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-ink-950/80 backdrop-blur-md animate-fade-in">
+      <div className="relative w-full max-w-md glass-panel border border-saffron-500/30 rounded-2xl sm:rounded-3xl p-5 sm:p-8 text-center space-y-5 sm:space-y-6 shadow-2xl max-h-[90dvh] overflow-y-auto">
         {/* Close Button */}
         <button
           onClick={onClose}

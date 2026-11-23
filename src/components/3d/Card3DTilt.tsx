@@ -20,6 +20,8 @@ export const Card3DTilt: React.FC<Card3DTiltProps> = ({
   const [glarePosition, setGlarePosition] = useState({ x: 50, y: 50, opacity: 0 });
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    // Only perform 3D tilt on devices with hover capability (non-touch)
+    if (window.matchMedia('(hover: none)').matches) return;
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;

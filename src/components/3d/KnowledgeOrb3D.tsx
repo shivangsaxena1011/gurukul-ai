@@ -16,13 +16,17 @@ export const KnowledgeOrb3D: React.FC<KnowledgeOrb3DProps> = ({ className = '', 
     // Check for reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    // Responsive size calculation
+    const isMobile = window.innerWidth < 640;
+    const computedSize = isMobile ? Math.min(size, window.innerWidth - 64, 270) : size;
+
     // Scene, Camera, Renderer
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
     camera.position.z = 5;
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(size, size);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+    renderer.setSize(computedSize, computedSize);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     currentMount.appendChild(renderer.domElement);
 
@@ -71,7 +75,7 @@ export const KnowledgeOrb3D: React.FC<KnowledgeOrb3DProps> = ({ className = '', 
     group.add(ring1, ring2, ring3);
 
     // 4. Floating Knowledge Particles
-    const particleCount = 200;
+    const particleCount = isMobile ? 120 : 200; // optimized for mobile GPU
     const particleGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     for (let i = 0; i < particleCount * 3; i += 3) {
@@ -104,19 +108,42 @@ export const KnowledgeOrb3D: React.FC<KnowledgeOrb3DProps> = ({ className = '', 
     blueLight.position.set(-3, -2, 2);
     scene.add(blueLight);
 
-    // Mouse interactive tilt
-    let mouseX = 0;
-    let mouseY = 0;
+    // Mouse & Touch interactive tilt
+    let pointerX = 0;
+    let pointerY = 0;
     let targetX = 0;
     let targetY = 0;
 
-    const onMouseMove = (e: MouseEvent) => {
+    const onPointerMove = (clientX: number, clientY: number) => {
       const rect = currentMount.getBoundingClientRect();
-      mouseX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-      mouseY = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+      pointerX = ((clientX - rect.left) / rect.width) * 2 - 1;
+      pointerY = -(((clientY - rect.top) / rect.height) * 2 - 1);
     };
 
-    window.addEventListener('mousemove', onMouseMove);
+    const handleMouseMove = (e: MouseEvent) => {
+      onPointerMove(e.clientX, e.clientY);
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        onPointerMove(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+
+    // Handle Window Resize
+    const handleResize = () => {
+      if (!currentMount) return;
+      const isMob = window.innerWidth < 640;
+      const newSize = isMob ? Math.min(size, window.innerWidth - 64, 270) : size;
+      camera.aspect = 1;
+      camera.updateProjectionMatrix();
+      renderer.setSize(newSize, newSize);
+    };
+
+    window.addEventListener('resize', handleResize);
 
     // Animation Loop
     let animationFrameId: number;
@@ -143,9 +170,9 @@ export const KnowledgeOrb3D: React.FC<KnowledgeOrb3DProps> = ({ className = '', 
         const scale = 1 + Math.sin(time * 2) * 0.04;
         coreMesh.scale.set(scale, scale, scale);
 
-        // Smooth mouse damping
-        targetX += (mouseX * 0.4 - targetX) * 0.05;
-        targetY += (mouseY * 0.4 - targetY) * 0.05;
+        // Smooth damping
+        targetX += (pointerX * 0.4 - targetX) * 0.05;
+        targetY += (pointerY * 0.4 - targetY) * 0.05;
         group.rotation.y = targetX;
         group.rotation.x = -targetY;
       }
@@ -157,7 +184,9 @@ export const KnowledgeOrb3D: React.FC<KnowledgeOrb3DProps> = ({ className = '', 
 
     return () => {
       cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('resize', handleResize);
       if (currentMount.contains(renderer.domElement)) {
         currentMount.removeChild(renderer.domElement);
       }
@@ -174,8 +203,7 @@ export const KnowledgeOrb3D: React.FC<KnowledgeOrb3DProps> = ({ className = '', 
   return (
     <div
       ref={mountRef}
-      className={`relative flex items-center justify-center select-none ${className}`}
-      style={{ width: size, height: size }}
+      className={`relative flex items-center justify-center select-none touch-none ${className}`}
       aria-label="Interactive 3D Knowledge Orb"
     />
   );

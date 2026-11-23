@@ -100,27 +100,27 @@ export const Hero: React.FC<HeroProps> = ({ onStartTutor, onExploreChapters }) =
           </div>
 
           {/* Right 3D Visual Column */}
-          <div className="lg:col-span-5 flex flex-col items-center justify-center relative">
-            <div className="relative w-full max-w-[360px] aspect-square flex items-center justify-center">
+          <div className="lg:col-span-5 flex flex-col items-center justify-center relative mt-6 lg:mt-0">
+            <div className="relative w-full max-w-[300px] sm:max-w-[360px] aspect-square flex items-center justify-center">
               {/* Three.js Canvas */}
-              <KnowledgeOrb3D size={340} className="filter drop-shadow-[0_0_40px_rgba(245,158,11,0.2)]" />
+              <KnowledgeOrb3D size={320} className="filter drop-shadow-[0_0_40px_rgba(245,158,11,0.2)]" />
 
               {/* Floating 3D Stat Badges */}
-              <div className="absolute top-2 -left-4 glass-panel-gold rounded-2xl px-4 py-2.5 shadow-xl animate-float-slow">
-                <div className="text-[10px] uppercase font-bold text-saffron-400">
+              <div className="absolute top-1 left-1 sm:-left-4 glass-panel-gold rounded-2xl px-3 py-1.5 sm:px-4 sm:py-2.5 shadow-xl animate-float-slow backdrop-blur-md">
+                <div className="text-[9px] sm:text-[10px] uppercase font-bold text-saffron-400">
                   {t('सॉक्रेटिक शिक्षण', 'Socratic Tutor')}
                 </div>
-                <div className="text-xs font-extrabold text-white">
+                <div className="text-[11px] sm:text-xs font-extrabold text-white">
                   {t('पहले संकेत, फिर उत्तर', 'Hints before answers')}
                 </div>
               </div>
 
-              <div className="absolute bottom-4 -right-4 glass-panel rounded-2xl px-4 py-2.5 shadow-xl animate-float-slow" style={{ animationDelay: '-3s' }}>
-                <div className="flex items-center gap-1 text-[10px] uppercase font-bold text-emerald-400">
+              <div className="absolute bottom-2 right-1 sm:-right-4 glass-panel rounded-2xl px-3 py-1.5 sm:px-4 sm:py-2.5 shadow-xl animate-float-slow backdrop-blur-md" style={{ animationDelay: '-3s' }}>
+                <div className="flex items-center gap-1 text-[9px] sm:text-[10px] uppercase font-bold text-emerald-400">
                   <WifiOff className="w-3 h-3" />
                   <span>{t('100% ऑफलाइन', '100% Offline')}</span>
                 </div>
-                <div className="text-xs font-extrabold text-white">
+                <div className="text-[11px] sm:text-xs font-extrabold text-white">
                   {t('बिना डेटा के पढ़ाई', 'Study without internet')}
                 </div>
               </div>

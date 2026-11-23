@@ -152,11 +152,11 @@ export const TutorChat: React.FC<TutorChatProps> = ({
       ];
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-6">
+    <div className="max-w-4xl mx-auto px-2 sm:px-4 py-2 sm:py-6">
       {/* Container Panel */}
-      <div className="glass-panel border border-white/10 rounded-3xl overflow-hidden shadow-2xl flex flex-col h-[750px]">
+      <div className="glass-panel border border-white/10 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl flex flex-col h-[calc(100dvh-140px)] sm:h-[750px] min-h-[460px] max-h-[850px]">
         {/* Chat Header */}
-        <div className="px-6 py-4 border-b border-white/10 bg-ink-900/80 flex items-center justify-between">
+        <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-white/10 bg-ink-900/80 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-saffron-500 to-amber-300 p-0.5 flex items-center justify-center">
               <div className="w-full h-full bg-ink-950 rounded-[10px] flex items-center justify-center">
@@ -370,12 +370,13 @@ export const TutorChat: React.FC<TutorChatProps> = ({
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder={t('अपना सवाल यहाँ लिखें (उदा. HCF कैसे निकालें?)...', 'Type your question here (e.g. How to find HCF?)...')}
-              className="flex-1 bg-ink-950 border border-white/10 rounded-2xl px-4 py-3 text-sm text-white placeholder-ink-500 focus:outline-none focus:border-saffron-500 transition-colors"
+              className="flex-1 bg-ink-950 border border-white/10 rounded-2xl px-3.5 sm:px-4 py-2.5 sm:py-3 text-base sm:text-sm text-white placeholder-ink-500 focus:outline-none focus:border-saffron-500 transition-colors"
             />
             <button
               type="submit"
               disabled={!input.trim() || loading}
-              className="p-3.5 rounded-2xl bg-gradient-to-r from-saffron-500 to-amber-600 text-ink-950 font-bold hover:scale-105 active:scale-95 disabled:opacity-40 disabled:hover:scale-100 transition-all shadow-lg shadow-saffron-500/20"
+              aria-label="Send Message"
+              className="p-3 sm:p-3.5 rounded-2xl bg-gradient-to-r from-saffron-500 to-amber-600 text-ink-950 font-bold hover:scale-105 active:scale-95 disabled:opacity-40 disabled:hover:scale-100 transition-all shadow-lg shadow-saffron-500/20 flex-shrink-0"
             >
               <Send className="w-4 h-4 fill-ink-950" />
             </button>

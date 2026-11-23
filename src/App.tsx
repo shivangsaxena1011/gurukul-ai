@@ -47,7 +47,7 @@ const AppContent: React.FC = () => {
       <Navbar activeTab={activeTab} setActiveTab={(tab) => setActiveTab(tab as any)} />
 
       {/* Main Content Area */}
-      <main className="flex-1">
+      <main className="flex-1 pb-20 md:pb-6">
         {activeTab === 'home' && (
           <>
             <Hero
