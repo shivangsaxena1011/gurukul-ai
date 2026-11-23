@@ -135,8 +135,8 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
                 aria-label="Select Language"
                 className="bg-transparent text-white font-medium focus:outline-none pr-1 sm:pr-2 cursor-pointer text-xs"
               >
-                <option value="en" className="bg-ink-900 text-white">EN</option>
-                <option value="hi" className="bg-ink-900 text-white">हिंदी</option>
+                <option value="en" className="bg-ink-900 text-white">English</option>
+                <option value="hi" className="bg-ink-900 text-white">हिन्दी</option>
                 <option value="hg" className="bg-ink-900 text-white">Hinglish</option>
               </select>
             </div>

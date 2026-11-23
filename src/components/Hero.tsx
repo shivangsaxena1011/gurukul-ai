@@ -48,7 +48,7 @@ export const Hero: React.FC<HeroProps> = ({
             {/* Pill Tag */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-saffron-500/10 border border-saffron-500/25 text-saffron-400 text-xs font-bold tracking-wide">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>{t('हिन्दी-प्रथम AI ट्यूटर', 'Hindi-First AI Tutor')} • {t('कक्षा 1 से 12', 'Classes 1 to 12')}</span>
+              <span>{t('सॉक्रेटिक AI ट्यूटर', 'Socratic AI Tutor')} • {t('कक्षा 1 से 12', 'Classes 1 to 12')}</span>
             </div>
 
             {/* Headline */}
@@ -62,8 +62,8 @@ export const Hero: React.FC<HeroProps> = ({
             {/* Subheading */}
             <p className="text-ink-300 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 leading-relaxed font-normal">
               {t(
-                'झारखंड के छात्रों के लिए विशेष रूप से तैयार किया गया AI गुरु। किताब की फोटो खींचकर पूछें, बोलकर बात करें, या बिना इंटरनेट के भी ऑफलाइन अभ्यास करें।',
-                'Specially designed AI Guru for students in Jharkhand. Snap a photo of your textbook question, speak in your language, or practice offline without internet.'
+                'स्कूली छात्रों के लिए विशेष रूप से तैयार किया गया AI गुरु। किताब की फोटो खींचकर पूछें, बोलकर बात करें, या बिना इंटरनेट के भी ऑफलाइन अभ्यास करें।',
+                'Socratic AI Tutor designed for school students. Snap a photo of your textbook question, ask in voice, or practice offline without internet.'
               )}
             </p>
 
@@ -178,7 +178,7 @@ export const Hero: React.FC<HeroProps> = ({
               <Sparkles className="w-5 h-5" />
             </div>
             <h2 className="text-base font-bold text-white mb-1">
-              {t('सॉक्रेटिक संकेत (Hints First)', 'Socratic Hints First')}
+              {t('सॉक्रेटिक संकेत', 'Socratic Hints First')}
             </h2>
             <p className="text-xs text-ink-300 leading-relaxed">
               {t(

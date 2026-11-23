@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
 import { BOARDS, STATES_AND_CITIES } from '../data/constants';
-import { X, Check, MapPin, GraduationCap, Sparkles, Building2, Compass } from 'lucide-react';
+import { Language } from '../types';
+import { X, Check, MapPin, GraduationCap, Sparkles, Building2, Compass, Globe } from 'lucide-react';
 
 export const OnboardingModal: React.FC = () => {
-  const { t } = useLanguage();
+  const { language, setLanguage, t } = useLanguage();
   const { user, updateUser, isOnboardingOpen, setIsOnboardingOpen } = useAuth();
 
+  const [selectedLang, setSelectedLang] = useState<Language>(language);
   const [selectedBoard, setSelectedBoard] = useState(user.board || 'CBSE');
   const [selectedGrade, setSelectedGrade] = useState(user.grade || 10);
   const [selectedState, setSelectedState] = useState(user.state || 'Jharkhand');
@@ -28,6 +30,7 @@ export const OnboardingModal: React.FC = () => {
   };
 
   const handleSave = () => {
+    setLanguage(selectedLang);
     updateUser({
       name: studentName,
       board: selectedBoard,
@@ -35,6 +38,7 @@ export const OnboardingModal: React.FC = () => {
       state: selectedState,
       city: selectedCity,
       district: selectedCity, // preserve backward compatibility
+      preferredLanguage: selectedLang,
     });
     setIsOnboardingOpen(false);
   };
@@ -79,6 +83,45 @@ export const OnboardingModal: React.FC = () => {
             onChange={(e) => setStudentName(e.target.value)}
             className="w-full bg-ink-950 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-saffron-500"
           />
+        </div>
+
+        {/* Learning Language Selection (English Primary, Hindi & Hinglish) */}
+        <div className="space-y-2">
+          <label className="text-xs font-bold text-ink-300 flex items-center gap-1.5">
+            <Globe className="w-4 h-4 text-purple-400" />
+            <span>{t('प्राथमिक शिक्षण भाषा चुनें (Primary Language):', 'Select Primary Learning Language:')}</span>
+          </label>
+          <div className="grid grid-cols-3 gap-2">
+            {[
+              { id: 'en', label: 'English', desc: 'Primary & Standard', badge: 'Primary' },
+              { id: 'hi', label: 'हिन्दी', desc: 'सरल एवं शुद्ध हिंदी', badge: 'Hindi' },
+              { id: 'hg', label: 'Hinglish', desc: 'Mixed Conversational', badge: 'Hinglish' },
+            ].map((langItem) => {
+              const isSelected = selectedLang === langItem.id;
+              return (
+                <button
+                  key={langItem.id}
+                  type="button"
+                  onClick={() => setSelectedLang(langItem.id as Language)}
+                  className={`p-3 rounded-2xl border text-left transition-all ${
+                    isSelected
+                      ? 'bg-purple-500/20 border-purple-400 text-white font-bold ring-2 ring-purple-500/30 scale-[1.02]'
+                      : 'bg-ink-950/60 border-white/10 text-ink-300 hover:text-white hover:border-white/20'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-0.5">
+                    <span className="text-sm font-extrabold text-white">{langItem.label}</span>
+                    <span className={`text-[9px] uppercase px-1.5 py-0.5 rounded-full font-bold ${
+                      isSelected ? 'bg-purple-500/30 text-purple-200' : 'bg-white/10 text-ink-400'
+                    }`}>
+                      {langItem.badge}
+                    </span>
+                  </div>
+                  <div className="text-[10px] text-ink-400 line-clamp-1">{langItem.desc}</div>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* 1. Educational Board Selection */}

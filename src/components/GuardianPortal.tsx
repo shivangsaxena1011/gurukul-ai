@@ -172,7 +172,7 @@ export const GuardianPortal: React.FC = () => {
             <div className="space-y-2">
               <div>
                 <div className="flex justify-between text-xs font-bold mb-1">
-                  <span className="text-white">गणित (Mathematics)</span>
+                  <span className="text-white">{t('गणित', 'Mathematics')}</span>
                   <span className="text-amber-400">88%</span>
                 </div>
                 <div className="h-2 rounded-full bg-ink-950 overflow-hidden">
@@ -182,7 +182,7 @@ export const GuardianPortal: React.FC = () => {
 
               <div>
                 <div className="flex justify-between text-xs font-bold mb-1">
-                  <span className="text-white">विज्ञान (Science)</span>
+                  <span className="text-white">{t('विज्ञान', 'Science')}</span>
                   <span className="text-emerald-400">76%</span>
                 </div>
                 <div className="h-2 rounded-full bg-ink-950 overflow-hidden">
@@ -192,7 +192,7 @@ export const GuardianPortal: React.FC = () => {
 
               <div>
                 <div className="flex justify-between text-xs font-bold mb-1">
-                  <span className="text-white">सामाजिक विज्ञान (Social Studies)</span>
+                  <span className="text-white">{t('सामाजिक विज्ञान', 'Social Studies')}</span>
                   <span className="text-sky-400">68%</span>
                 </div>
                 <div className="h-2 rounded-full bg-ink-950 overflow-hidden">

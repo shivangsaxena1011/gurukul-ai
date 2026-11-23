@@ -407,7 +407,11 @@ export const MathCanvasModal: React.FC<MathCanvasModalProps> = ({
               <div className="pt-2 flex justify-end">
                 <button
                   onClick={() => {
-                    onOpenChatWithQuery('द्विघात सूत्र x = [-b ± √(b² - 4ac)] / 2a का निगमन और इसपर अन्य उदाहरण समझाएं।');
+                    onOpenChatWithQuery(
+                      language === 'en'
+                        ? 'Explain the derivation and board exam examples for quadratic formula x = [-b ± √(b² - 4ac)] / 2a.'
+                        : 'द्विघात सूत्र x = [-b ± √(b² - 4ac)] / 2a का निगमन और इसपर अन्य उदाहरण समझाएं।'
+                    );
                     onClose();
                   }}
                   className="flex items-center gap-1.5 text-xs font-bold text-saffron-400 hover:text-saffron-300"

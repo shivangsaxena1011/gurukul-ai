@@ -159,7 +159,10 @@ const AppContent: React.FC = () => {
         </div>
 
         <p className="text-[11px] text-ink-500">
-          सॉक्रेटिक संकेत आधारित शिक्षण • 3D इंटरैक्टिव शिक्षा • पूर्णतः ऑफलाइन P2P QR सक्षम • बोर्ड परीक्षा प्रेडिक्टर
+          {t(
+            'सॉक्रेटिक संकेत आधारित शिक्षण • 3D इंटरैक्टिव शिक्षा • पूर्णतः ऑफलाइन P2P QR सक्षम • बोर्ड परीक्षा प्रेडिक्टर',
+            'Socratic Hint-First AI • 3D Interactive Learning • 100% Offline P2P QR Enabled • Board Exam Predictor'
+          )}
         </p>
       </footer>
     </div>

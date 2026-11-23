@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 
 export const OfflineManager: React.FC = () => {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
   const { user, isOnline, pendingSyncCount, triggerSync } = useAuth();
   const [downloadedPacks, setDownloadedPacks] = useState<OfflinePack[]>([]);
   const [downloadingSlug, setDownloadingSlug] = useState<string | null>(null);
@@ -206,10 +206,10 @@ export const OfflineManager: React.FC = () => {
               >
                 <div>
                   <div className="text-xs font-bold uppercase tracking-wider text-saffron-400">
-                    {ch.subjectId.toUpperCase()} • कक्षा {ch.grade}
+                    {ch.subjectId.toUpperCase()} • {t('कक्षा', 'Class')} {ch.grade}
                   </div>
                   <h4 className="text-base font-bold text-white mt-0.5">
-                    {ch.titleHi}
+                    {language === 'en' ? ch.title : ch.titleHi}
                   </h4>
                   <p className="text-xs text-ink-400 mt-1 line-clamp-1">
                     {ch.description}
