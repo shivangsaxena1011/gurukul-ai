@@ -12,7 +12,8 @@ import {
   Home,
   MessageSquare,
   Download,
-  Users
+  Users,
+  Code2
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -139,6 +140,18 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
                 <option value="hg" className="bg-ink-900 text-white">Hinglish</option>
               </select>
             </div>
+
+            {/* Developer Credit Pill */}
+            <a
+              href="https://github.com/shivangsaxena1011"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Developed by Shivang Saxena"
+              className="hidden lg:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-ink-900 border border-white/10 hover:border-saffron-500/40 text-xs font-semibold text-ink-300 hover:text-white transition-all group"
+            >
+              <Code2 className="w-3.5 h-3.5 text-saffron-400 group-hover:rotate-12 transition-transform" />
+              <span>Dev: <strong className="text-white font-bold">Shivang Saxena</strong></span>
+            </a>
 
             {/* Grade/District Profile Settings */}
             <button

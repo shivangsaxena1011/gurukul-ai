@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { localDB } from '../services/indexedDB';
 import { SAMPLE_CHAPTERS } from '../data/constants';
 import { OfflinePack, Chapter } from '../types';
+import { OfflineQRShareModal } from './OfflineQRShareModal';
 import {
   Download,
   Trash2,
@@ -12,7 +13,9 @@ import {
   WifiOff,
   CheckCircle2,
   Sparkles,
-  BookOpen
+  BookOpen,
+  QrCode,
+  Share2
 } from 'lucide-react';
 
 export const OfflineManager: React.FC = () => {
@@ -21,6 +24,8 @@ export const OfflineManager: React.FC = () => {
   const [downloadedPacks, setDownloadedPacks] = useState<OfflinePack[]>([]);
   const [downloadingSlug, setDownloadingSlug] = useState<string | null>(null);
   const [syncing, setSyncing] = useState(false);
+  const [selectedSharePack, setSelectedSharePack] = useState<OfflinePack | null>(null);
+  const [isQRModalOpen, setIsQRModalOpen] = useState(false);
 
   useEffect(() => {
     loadPacks();
@@ -106,13 +111,26 @@ export const OfflineManager: React.FC = () => {
 
       {/* Downloaded Packs Section */}
       <div className="space-y-4">
-        <h3 className="text-lg font-bold text-white flex items-center gap-2">
-          <HardDrive className="w-5 h-5 text-emerald-400" />
-          <span>{t('डाउनलोड किए गए पैक्स (IndexedDB Storage)', 'Stored Offline Packs')}</span>
-          <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/20">
-            {downloadedPacks.length}
-          </span>
-        </h3>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <h3 className="text-lg font-bold text-white flex items-center gap-2">
+            <HardDrive className="w-5 h-5 text-emerald-400" />
+            <span>{t('डाउनलोड किए गए पैक्स (IndexedDB Storage)', 'Stored Offline Packs')}</span>
+            <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/20">
+              {downloadedPacks.length}
+            </span>
+          </h3>
+
+          <button
+            onClick={() => {
+              setSelectedSharePack(downloadedPacks[0] || null);
+              setIsQRModalOpen(true);
+            }}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 text-xs font-bold transition-colors w-fit"
+          >
+            <QrCode className="w-3.5 h-3.5" />
+            <span>{t('P2P QR शेयरिंग / प्राप्त करें', 'P2P QR Share / Receive')}</span>
+          </button>
+        </div>
 
         {downloadedPacks.length === 0 ? (
           <div className="glass-panel border border-white/10 rounded-2xl p-8 text-center text-ink-400 text-sm">
@@ -137,18 +155,37 @@ export const OfflineManager: React.FC = () => {
                   </div>
                 </div>
 
-                <button
-                  onClick={() => handleDelete(pack.slug)}
-                  title="Delete Pack"
-                  className="p-2.5 rounded-xl bg-white/5 hover:bg-rose-500/20 text-ink-400 hover:text-rose-400 border border-white/10 transition-colors"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => {
+                      setSelectedSharePack(pack);
+                      setIsQRModalOpen(true);
+                    }}
+                    title={t('QR कोड से शेयर करें', 'Share via QR')}
+                    className="p-2.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 transition-colors"
+                  >
+                    <QrCode className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(pack.slug)}
+                    title="Delete Pack"
+                    className="p-2.5 rounded-xl bg-white/5 hover:bg-rose-500/20 text-ink-400 hover:text-rose-400 border border-white/10 transition-colors"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
             ))}
           </div>
         )}
       </div>
+
+      <OfflineQRShareModal
+        isOpen={isQRModalOpen}
+        onClose={() => setIsQRModalOpen(false)}
+        pack={selectedSharePack}
+        onPackImported={loadPacks}
+      />
 
       {/* Available Chapters to Download */}
       <div className="space-y-4">

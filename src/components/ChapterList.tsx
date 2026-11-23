@@ -13,17 +13,20 @@ import {
   Calculator,
   Atom,
   Globe,
-  Languages
+  Languages,
+  Radio
 } from 'lucide-react';
 
 interface ChapterListProps {
   onSelectChapter: (chapter: Chapter) => void;
   onAskTutorAboutChapter: (title: string) => void;
+  onOpenPodcast?: (chapter: Chapter) => void;
 }
 
 export const ChapterList: React.FC<ChapterListProps> = ({
   onSelectChapter,
-  onAskTutorAboutChapter
+  onAskTutorAboutChapter,
+  onOpenPodcast
 }) => {
   const { t } = useLanguage();
   const { user } = useAuth();
@@ -121,11 +124,21 @@ export const ChapterList: React.FC<ChapterListProps> = ({
                   <span>{t('AI से समझें', 'Ask AI')}</span>
                 </button>
 
+                {onOpenPodcast && (
+                  <button
+                    onClick={() => onOpenPodcast(chapter)}
+                    className="p-2 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 font-bold text-xs border border-emerald-500/30 transition-colors flex items-center justify-center"
+                    title={t('2-मिनट ऑडियो पॉडकास्ट', '2-Minute Audio Podcast')}
+                  >
+                    <Radio className="w-3.5 h-3.5" />
+                  </button>
+                )}
+
                 <button
                   onClick={() => onSelectChapter(chapter)}
                   className="py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 text-white font-bold text-xs border border-white/10 transition-colors flex items-center gap-1"
                 >
-                  <span>{t('विषय सूची', 'Topics')}</span>
+                  <span>{t('विषय', 'Topics')}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>

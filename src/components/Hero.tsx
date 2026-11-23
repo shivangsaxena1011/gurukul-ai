@@ -12,15 +12,27 @@ import {
   WifiOff,
   MapPin,
   CheckCircle2,
-  ArrowRight
+  ArrowRight,
+  Edit3,
+  Swords,
+  Target
 } from 'lucide-react';
 
 interface HeroProps {
   onStartTutor: (mode?: 'TEXT' | 'VOICE' | 'PHOTO') => void;
   onExploreChapters: () => void;
+  onOpenMathCanvas?: () => void;
+  onOpenPeerBattle?: () => void;
+  onOpenExamPredictor?: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onStartTutor, onExploreChapters }) => {
+export const Hero: React.FC<HeroProps> = ({
+  onStartTutor,
+  onExploreChapters,
+  onOpenMathCanvas,
+  onOpenPeerBattle,
+  onOpenExamPredictor
+}) => {
   const { t } = useLanguage();
   const { user, setIsOnboardingOpen } = useAuth();
 
@@ -81,6 +93,37 @@ export const Hero: React.FC<HeroProps> = ({ onStartTutor, onExploreChapters }) =
                 <Camera className="w-4 h-4 text-blue-400" />
                 <span>{t('फोटो से पूछें', 'Snap Photo')}</span>
               </button>
+            </div>
+
+            {/* Quick Feature Launch Strip */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-1">
+              {onOpenMathCanvas && (
+                <button
+                  onClick={onOpenMathCanvas}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-bold hover:bg-amber-500/20 hover:scale-105 transition-all"
+                >
+                  <Edit3 className="w-3.5 h-3.5" />
+                  <span>{t('हस्तलिखित मैथ सॉल्वर', 'Math Canvas')}</span>
+                </button>
+              )}
+              {onOpenPeerBattle && (
+                <button
+                  onClick={onOpenPeerBattle}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs font-bold hover:bg-rose-500/20 hover:scale-105 transition-all"
+                >
+                  <Swords className="w-3.5 h-3.5" />
+                  <span>{t('1v1 ज्ञान मुकाबला', '1v1 Peer Battle')}</span>
+                </button>
+              )}
+              {onOpenExamPredictor && (
+                <button
+                  onClick={onOpenExamPredictor}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-bold hover:bg-purple-500/20 hover:scale-105 transition-all"
+                >
+                  <Target className="w-3.5 h-3.5" />
+                  <span>{t('AI बोर्ड प्रेडिक्टर', 'Board Predictor')}</span>
+                </button>
+              )}
             </div>
 
             {/* Current Student Profile Bar */}

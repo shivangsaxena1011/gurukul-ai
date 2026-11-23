@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
+import { TeacherHubModal } from './TeacherHubModal';
 import {
   Users,
   KeyRound,
@@ -9,7 +10,8 @@ import {
   Clock,
   CheckCircle2,
   BookOpen,
-  Award
+  Award,
+  GraduationCap
 } from 'lucide-react';
 
 export const GuardianPortal: React.FC = () => {
@@ -17,6 +19,7 @@ export const GuardianPortal: React.FC = () => {
   const { user } = useAuth();
   const [inputCode, setInputCode] = useState('');
   const [isLinked, setIsLinked] = useState(true); // Linked by default with Aryan Verma
+  const [isTeacherHubOpen, setIsTeacherHubOpen] = useState(false);
 
   const handleLink = (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,11 +32,22 @@ export const GuardianPortal: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
       {/* Header */}
-      <div className="glass-panel border border-white/10 rounded-3xl p-6 sm:p-8 space-y-2 text-center sm:text-left shadow-2xl">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold">
-          <Users className="w-3.5 h-3.5" />
-          <span>{t('अभिभावक एवं शिक्षक पोर्टल', 'Guardian & Teacher Portal')}</span>
+      <div className="glass-panel border border-white/10 rounded-3xl p-6 sm:p-8 space-y-3 shadow-2xl">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold w-fit">
+            <Users className="w-3.5 h-3.5" />
+            <span>{t('अभिभावक एवं शिक्षक पोर्टल', 'Guardian & Teacher Portal')}</span>
+          </div>
+
+          <button
+            onClick={() => setIsTeacherHubOpen(true)}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold text-xs shadow-md hover:scale-105 active:scale-95 transition-all w-fit"
+          >
+            <GraduationCap className="w-4 h-4" />
+            <span>{t('👨‍🏫 शिक्षक क्लासरूम केंद्र (Teacher Broadcast Hub)', 'Teacher Broadcast Hub')}</span>
+          </button>
         </div>
+
         <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
           {t('छात्र की प्रगति और अध्ययन निगरानी', 'Track Ward Progress and Mastery')}
         </h2>
@@ -189,6 +203,12 @@ export const GuardianPortal: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Teacher Hub Modal */}
+      <TeacherHubModal
+        isOpen={isTeacherHubOpen}
+        onClose={() => setIsTeacherHubOpen(false)}
+      />
     </div>
   );
 };
