@@ -12,9 +12,7 @@ import {
   Send,
   X,
   Lightbulb,
-  CheckCircle2,
-  RefreshCw,
-  HelpCircle
+  RefreshCw
 } from 'lucide-react';
 
 interface MathCanvasModalProps {

@@ -9,9 +9,7 @@ import {
   Check,
   RefreshCw,
   Sparkles,
-  Image as ImageIcon,
-  Scan,
-  Edit2
+  Scan
 } from 'lucide-react';
 
 interface PhotoModalProps {

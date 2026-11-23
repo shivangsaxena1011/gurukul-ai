@@ -6,12 +6,10 @@ import { soundFx } from '../utils/soundEffects';
 import QRCode from 'qrcode';
 import {
   QrCode,
-  Share2,
   Download,
   Upload,
   CheckCircle2,
   X,
-  Sparkles,
   WifiOff,
   Copy,
   Check

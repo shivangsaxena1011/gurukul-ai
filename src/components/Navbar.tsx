@@ -16,8 +16,7 @@ import {
   Users,
   Code2,
   LogIn,
-  LogOut,
-  User
+  LogOut
 } from 'lucide-react';
 
 interface NavbarProps {

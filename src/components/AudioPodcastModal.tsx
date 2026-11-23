@@ -4,8 +4,6 @@ import { useAuth } from '../context/AuthContext';
 import { Chapter } from '../types';
 import { soundFx } from '../utils/soundEffects';
 import {
-  Volume2,
-  VolumeX,
   Play,
   Pause,
   RotateCcw,

@@ -18,7 +18,7 @@ import { PeerBattleModal } from './components/PeerBattleModal';
 import { AuthModal } from './components/AuthModal';
 import { AuthLandingPage } from './components/AuthLandingPage';
 import { Chapter } from './types';
-import { Sparkles, Heart, Code2 } from 'lucide-react';
+import { Sparkles, Code2 } from 'lucide-react';
 
 const AppContent: React.FC = () => {
   const { language, t } = useLanguage();

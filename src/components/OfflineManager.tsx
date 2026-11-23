@@ -12,10 +12,8 @@ import {
   RefreshCw,
   WifiOff,
   CheckCircle2,
-  Sparkles,
   BookOpen,
-  QrCode,
-  Share2
+  QrCode
 } from 'lucide-react';
 
 export const OfflineManager: React.FC = () => {

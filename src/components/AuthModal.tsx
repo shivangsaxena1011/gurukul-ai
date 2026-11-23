@@ -9,7 +9,6 @@ import {
   CheckCircle2,
   Compass,
   ShieldCheck,
-  GraduationCap,
   ArrowRight
 } from 'lucide-react';
 

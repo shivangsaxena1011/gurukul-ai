@@ -8,7 +8,6 @@ import { soundFx } from '../utils/soundEffects';
 import {
   BookOpen,
   CheckCircle2,
-  Download,
   ArrowRight,
   Sparkles,
   Calculator,

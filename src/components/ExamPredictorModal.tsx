@@ -4,7 +4,6 @@ import { useAuth } from '../context/AuthContext';
 import { soundFx } from '../utils/soundEffects';
 import confetti from 'canvas-confetti';
 import {
-  TrendingUp,
   AlertTriangle,
   CheckSquare,
   Square,
@@ -12,7 +11,6 @@ import {
   Sparkles,
   X,
   Target,
-  BookOpen,
   Calendar,
   ChevronRight
 } from 'lucide-react';

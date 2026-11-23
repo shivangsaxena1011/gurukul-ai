@@ -12,7 +12,6 @@ import {
   WifiOff,
   GraduationCap,
   Award,
-  Globe2,
   Zap,
   ShieldCheck,
   ChevronRight

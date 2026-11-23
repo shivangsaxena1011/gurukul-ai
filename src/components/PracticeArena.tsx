@@ -6,17 +6,14 @@ import { PracticeQuestion } from '../types';
 import { soundFx } from '../utils/soundEffects';
 import confetti from 'canvas-confetti';
 import {
-  Award,
   CheckCircle,
   XCircle,
   ArrowRight,
   Flame,
-  HelpCircle,
   Lightbulb,
   Sparkles,
   Edit3,
-  RotateCcw,
-  BookOpen
+  RotateCcw
 } from 'lucide-react';
 
 export const PracticeArena: React.FC = () => {

@@ -4,15 +4,9 @@ import { useAuth } from '../context/AuthContext';
 import { soundFx } from '../utils/soundEffects';
 import {
   GraduationCap,
-  Users,
   CheckCircle2,
-  Clock,
-  Sparkles,
   X,
   Plus,
-  Send,
-  BarChart3,
-  Award,
   AlertCircle
 } from 'lucide-react';
 

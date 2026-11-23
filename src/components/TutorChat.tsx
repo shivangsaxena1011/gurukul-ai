@@ -13,7 +13,6 @@ import {
   VolumeX,
   Lightbulb,
   CheckCircle,
-  HelpCircle,
   Copy,
   Check,
   Trash2,

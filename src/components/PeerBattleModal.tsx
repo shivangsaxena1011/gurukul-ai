@@ -8,7 +8,6 @@ import {
   Swords,
   Timer,
   Award,
-  Zap,
   CheckCircle,
   XCircle,
   Sparkles,

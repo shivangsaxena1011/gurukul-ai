@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { soundFx } from '../utils/soundEffects';
-import { Mic, MicOff, X, Volume2, Sparkles, Check, RefreshCw, Radio } from 'lucide-react';
+import { Mic, MicOff, X, Sparkles, Check, RefreshCw, Radio } from 'lucide-react';
 
 interface VoiceModalProps {
   isOpen: boolean;
