@@ -159,7 +159,7 @@ const AppContent: React.FC = () => {
       <footer className="border-t border-slate-200 py-8 px-4 text-center text-xs text-slate-500 space-y-3 bg-white">
         <div className="flex items-center justify-center gap-1.5 font-bold text-slate-700">
           <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-          <span>GURUKUL AI — {t('झारखंड एवं भारत के छात्रों को समर्पित', 'Dedicated to students across Jharkhand and India')}</span>
+          <span>GURUKUL AI — {t('संपूर्ण भारत के छात्रों को समर्पित', 'Dedicated to students across India')}</span>
         </div>
 
         {/* Developer Attribution Card (Clean, No Profile Links) */}

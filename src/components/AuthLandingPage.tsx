@@ -257,7 +257,7 @@ export const AuthLandingPage: React.FC<AuthLandingPageProps> = ({ onEnter }) => 
       <footer className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-6 border-t border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
         <div className="flex items-center gap-2 font-medium">
           <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-          <span>GURUKUL AI — {t('झारखंड एवं भारत के छात्रों को समर्पित', 'Dedicated to students across Jharkhand and India')}</span>
+          <span>GURUKUL AI — {t('संपूर्ण भारत के छात्रों को समर्पित', 'Dedicated to students across India')}</span>
         </div>
 
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-700 shadow-sm">
