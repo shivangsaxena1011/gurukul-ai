@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
+import { GurukulLogo } from './GurukulLogo';
 import {
   Sparkles,
   Wifi,
@@ -54,15 +55,11 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
             onClick={() => setActiveTab('home')}
             className="flex items-center gap-2 sm:gap-3 cursor-pointer group select-none min-w-0"
           >
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-600 p-0.5 shadow-md group-hover:scale-105 transition-transform duration-300 flex-shrink-0">
-              <div className="w-full h-full bg-white rounded-[10px] flex items-center justify-center">
-                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-amber-500 animate-pulse" />
-              </div>
-            </div>
+            <GurukulLogo size="md" />
             <div className="min-w-0">
               <div className="flex items-center gap-1.5 sm:gap-2">
-                <span className="font-display font-extrabold text-base sm:text-xl tracking-tight text-slate-900 truncate">
-                  GURUKUL AI
+                <span className="font-display font-black text-base sm:text-xl tracking-tight text-slate-900 truncate">
+                  GURUKUL <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-amber-500">AI</span>
                 </span>
                 <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider px-1.5 sm:px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200 whitespace-nowrap">
                   {user.board || 'CBSE'} • {t('कक्षा', 'Cl.')} {user.grade}

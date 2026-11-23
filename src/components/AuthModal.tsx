@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
+import { GurukulLogo } from './GurukulLogo';
 import { soundFx } from '../utils/soundEffects';
 import {
   X,
@@ -41,14 +42,10 @@ export const AuthModal: React.FC = () => {
         </button>
 
         {/* Brand Header */}
-        <div className="text-center space-y-2">
-          <div className="w-12 h-12 mx-auto rounded-2xl bg-gradient-to-tr from-saffron-500 to-amber-300 p-0.5 shadow-md shadow-saffron-500/20 flex items-center justify-center">
-            <div className="w-full h-full bg-white rounded-[14px] flex items-center justify-center">
-              <Sparkles className="w-6 h-6 text-saffron-600" />
-            </div>
-          </div>
+        <div className="text-center space-y-2 flex flex-col items-center">
+          <GurukulLogo size="lg" />
           <h2 className="text-2xl font-black text-slate-900 tracking-tight">
-            GURUKUL AI
+            GURUKUL <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-amber-500">AI</span>
           </h2>
           <p className="text-xs sm:text-sm text-slate-600 max-w-xs mx-auto">
             {t(

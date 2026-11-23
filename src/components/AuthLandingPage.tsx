@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
+import { GurukulLogo } from './GurukulLogo';
 import { soundFx } from '../utils/soundEffects';
 import {
   Sparkles,
@@ -52,14 +53,12 @@ export const AuthLandingPage: React.FC<AuthLandingPageProps> = ({ onEnter }) => 
       {/* Top Bar with Language Selector */}
       <header className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-saffron-500 via-amber-500 to-amber-600 p-0.5 shadow-md shadow-saffron-500/25 flex items-center justify-center">
-            <div className="w-full h-full bg-white rounded-[14px] flex items-center justify-center">
-              <Sparkles className="w-5 h-5 text-amber-500 animate-pulse" />
-            </div>
-          </div>
+          <GurukulLogo size="md" />
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="font-extrabold text-slate-900 text-lg sm:text-xl tracking-tight">GURUKUL AI</span>
+              <span className="font-black text-slate-900 text-lg sm:text-xl tracking-tight">
+                GURUKUL <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-amber-500">AI</span>
+              </span>
               <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-200">
                 PROD v2.4
               </span>
