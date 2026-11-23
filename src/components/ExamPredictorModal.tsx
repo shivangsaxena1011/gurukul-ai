@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
+import { soundFx } from '../utils/soundEffects';
+import confetti from 'canvas-confetti';
 import {
   TrendingUp,
   AlertTriangle,
@@ -41,9 +43,22 @@ export const ExamPredictorModal: React.FC<ExamPredictorModalProps> = ({
   ]);
 
   const toggleDay = (id: number) => {
-    setRevisionDays(prev =>
-      prev.map(d => (d.id === id ? { ...d, done: !d.done } : d))
-    );
+    soundFx.playClick();
+    setRevisionDays(prev => {
+      const updated = prev.map(d => (d.id === id ? { ...d, done: !d.done } : d));
+      const newlyDone = updated.find(d => d.id === id)?.done;
+      if (newlyDone) {
+        soundFx.playCorrect();
+      }
+      if (updated.every(d => d.done)) {
+        confetti({
+          particleCount: 80,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+      }
+      return updated;
+    });
   };
 
   if (!isOpen) return null;

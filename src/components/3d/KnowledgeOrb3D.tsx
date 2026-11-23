@@ -34,44 +34,64 @@ export const KnowledgeOrb3D: React.FC<KnowledgeOrb3DProps> = ({ className = '', 
     const group = new THREE.Group();
     scene.add(group);
 
-    // 1. Central Core: Glowing Wireframe Polyhedron (Icosahedron)
-    const coreGeo = new THREE.IcosahedronGeometry(1.2, 1);
-    const coreMat = new THREE.MeshStandardMaterial({
+    // 1. Central Core: Glowing Translucent Faceted Crystal
+    const coreGeo = new THREE.IcosahedronGeometry(1.15, 1);
+    const coreMat = new THREE.MeshPhysicalMaterial({
       color: 0xf59e0b,
-      roughness: 0.2,
-      metalness: 0.8,
+      roughness: 0.1,
+      metalness: 0.2,
+      transmission: 0.4,
+      ior: 1.5,
       wireframe: true,
       emissive: 0xd97706,
-      emissiveIntensity: 0.4
+      emissiveIntensity: 0.5,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.1
     });
     const coreMesh = new THREE.Mesh(coreGeo, coreMat);
     group.add(coreMesh);
 
-    // 2. Inner Crystal Sphere
-    const innerGeo = new THREE.SphereGeometry(0.7, 16, 16);
+    // 2. Inner Glowing Energy Core
+    const innerGeo = new THREE.SphereGeometry(0.65, 24, 24);
     const innerMat = new THREE.MeshStandardMaterial({
       color: 0x10b981,
       emissive: 0x059669,
-      emissiveIntensity: 0.6,
-      roughness: 0.1,
-      metalness: 0.9,
+      emissiveIntensity: 0.9,
+      roughness: 0.2,
+      metalness: 0.8,
     });
     const innerMesh = new THREE.Mesh(innerGeo, innerMat);
     group.add(innerMesh);
 
-    // 3. Orbital Rings (Gimbal)
+    // 3. Orbital Rings (Gimbal with Spherical Satellites)
     const createRing = (radius: number, color: number, rotX: number, rotY: number) => {
-      const ringGeo = new THREE.TorusGeometry(radius, 0.02, 8, 64);
-      const ringMat = new THREE.MeshBasicMaterial({ color, wireframe: false });
+      const ringGroup = new THREE.Group();
+      const ringGeo = new THREE.TorusGeometry(radius, 0.025, 12, 80);
+      const ringMat = new THREE.MeshStandardMaterial({
+        color,
+        emissive: color,
+        emissiveIntensity: 0.3,
+        roughness: 0.3,
+        metalness: 0.9
+      });
       const ringMesh = new THREE.Mesh(ringGeo, ringMat);
       ringMesh.rotation.x = rotX;
       ringMesh.rotation.y = rotY;
-      return ringMesh;
+      ringGroup.add(ringMesh);
+
+      // Add a shining satellite beacon on each ring
+      const satGeo = new THREE.SphereGeometry(0.08, 12, 12);
+      const satMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+      const satMesh = new THREE.Mesh(satGeo, satMat);
+      satMesh.position.set(radius * Math.cos(rotX), radius * Math.sin(rotX), 0);
+      ringMesh.add(satMesh);
+
+      return ringGroup;
     };
 
-    const ring1 = createRing(1.8, 0xfbbf24, Math.PI / 4, 0);
-    const ring2 = createRing(2.1, 0x34d399, -Math.PI / 3, Math.PI / 6);
-    const ring3 = createRing(2.4, 0x60a5fa, Math.PI / 6, Math.PI / 3);
+    const ring1 = createRing(1.85, 0xfbbf24, Math.PI / 4, 0);
+    const ring2 = createRing(2.15, 0x34d399, -Math.PI / 3, Math.PI / 6);
+    const ring3 = createRing(2.45, 0x60a5fa, Math.PI / 6, Math.PI / 3);
     group.add(ring1, ring2, ring3);
 
     // 4. Floating Knowledge Particles

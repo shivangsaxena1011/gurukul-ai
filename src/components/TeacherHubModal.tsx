@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
+import { soundFx } from '../utils/soundEffects';
 import {
   GraduationCap,
   Users,
@@ -57,6 +58,7 @@ export const TeacherHubModal: React.FC<TeacherHubModalProps> = ({
   const [isSuccess, setIsSuccess] = useState(false);
 
   const handleCreateAssignment = () => {
+    soundFx.playClick();
     const randomCode = 'GK' + Math.floor(10 + Math.random() * 90);
     const newAss = {
       code: randomCode,
@@ -74,6 +76,7 @@ export const TeacherHubModal: React.FC<TeacherHubModalProps> = ({
   const handleStudentJoin = (e: React.FormEvent) => {
     e.preventDefault();
     if (studentInputCode.trim().length >= 4) {
+      soundFx.playCorrect();
       setIsSuccess(true);
       setTimeout(() => {
         setIsSuccess(false);

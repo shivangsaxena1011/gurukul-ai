@@ -3,6 +3,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
 import { ApiService } from '../services/api';
 import { StructuredTutorResponse } from '../types';
+import { soundFx } from '../utils/soundEffects';
 import {
   Edit3,
   Eraser,
@@ -149,6 +150,7 @@ export const MathCanvasModal: React.FC<MathCanvasModalProps> = ({
   };
 
   const insertSymbol = (sym: string) => {
+    soundFx.playClick();
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -163,6 +165,7 @@ export const MathCanvasModal: React.FC<MathCanvasModalProps> = ({
 
   const handleSolve = async () => {
     if (!hasDrawn || isSolving) return;
+    soundFx.playClick();
     setIsSolving(true);
     setSolution(null);
 
@@ -187,6 +190,7 @@ export const MathCanvasModal: React.FC<MathCanvasModalProps> = ({
       });
 
       setSolution(res.response);
+      soundFx.playCorrect();
     } catch (err) {
       console.error(err);
     } finally {

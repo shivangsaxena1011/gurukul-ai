@@ -15,6 +15,7 @@ import { MathCanvasModal } from './components/MathCanvasModal';
 import { AudioPodcastModal } from './components/AudioPodcastModal';
 import { ExamPredictorModal } from './components/ExamPredictorModal';
 import { PeerBattleModal } from './components/PeerBattleModal';
+import { DeveloperModal } from './components/DeveloperModal';
 import { Chapter } from './types';
 import { Sparkles, Heart, Code2, ExternalLink } from 'lucide-react';
 
@@ -26,6 +27,7 @@ const AppContent: React.FC = () => {
   const [isMathCanvasOpen, setIsMathCanvasOpen] = useState(false);
   const [isPeerBattleOpen, setIsPeerBattleOpen] = useState(false);
   const [isExamPredictorOpen, setIsExamPredictorOpen] = useState(false);
+  const [isDeveloperModalOpen, setIsDeveloperModalOpen] = useState(false);
   const [selectedPodcastChapter, setSelectedPodcastChapter] = useState<Chapter | null>(null);
   const [isPodcastOpen, setIsPodcastOpen] = useState(false);
   const [tutorInitialQuery, setTutorInitialQuery] = useState('');
@@ -58,7 +60,11 @@ const AppContent: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col bg-[#0B0F19] text-ink-100 selection:bg-saffron-500 selection:text-ink-950">
       {/* Top Navigation */}
-      <Navbar activeTab={activeTab} setActiveTab={(tab) => setActiveTab(tab as any)} />
+      <Navbar
+        activeTab={activeTab}
+        setActiveTab={(tab) => setActiveTab(tab as any)}
+        onOpenDeveloperModal={() => setIsDeveloperModalOpen(true)}
+      />
 
       {/* Main Content Area */}
       <main className="flex-1 pb-20 md:pb-6">
@@ -137,6 +143,11 @@ const AppContent: React.FC = () => {
 
       <OnboardingModal />
 
+      <DeveloperModal
+        isOpen={isDeveloperModalOpen}
+        onClose={() => setIsDeveloperModalOpen(false)}
+      />
+
       {/* Footer & Developer Attribution */}
       <footer className="border-t border-white/5 py-8 px-4 text-center text-xs text-ink-500 space-y-3 bg-ink-950/60">
         <div className="flex items-center justify-center gap-1.5 font-bold text-ink-300">
@@ -145,19 +156,17 @@ const AppContent: React.FC = () => {
         </div>
 
         {/* Developer Attribution Card */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/5 border border-white/10 text-xs shadow-lg">
-          <Code2 className="w-4 h-4 text-saffron-400" />
+        <div
+          onClick={() => setIsDeveloperModalOpen(true)}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/5 border border-saffron-500/30 hover:border-saffron-500 text-xs shadow-lg cursor-pointer transition-colors group"
+        >
+          <Code2 className="w-4 h-4 text-saffron-400 group-hover:rotate-12 transition-transform" />
           <span>
             {t('वास्तुकार एवं मुख्य डेवलपर:', 'Architected & Developed by:')}{' '}
-            <a
-              href="https://github.com/shivangsaxena1011"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-extrabold text-amber-300 hover:text-white underline decoration-amber-500/40 hover:decoration-amber-300 transition-colors inline-flex items-center gap-1"
-            >
+            <strong className="font-extrabold text-amber-300 group-hover:text-white underline decoration-amber-500/40 transition-colors inline-flex items-center gap-1">
               Shivang Saxena
               <ExternalLink className="w-3 h-3 inline" />
-            </a>
+            </strong>
           </span>
         </div>
 

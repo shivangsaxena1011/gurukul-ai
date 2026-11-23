@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
 import { SAMPLE_QUESTIONS } from '../data/constants';
+import { soundFx } from '../utils/soundEffects';
+import confetti from 'canvas-confetti';
 import {
   Swords,
   Timer,
@@ -86,7 +88,10 @@ export const PeerBattleModal: React.FC<PeerBattleModalProps> = ({
 
     const isUserCorrect = idx === currentQ.correctIndex;
     if (isUserCorrect) {
+      soundFx.playCorrect();
       setUserScore(s => s + 10);
+    } else {
+      soundFx.playIncorrect();
     }
 
     // Simulate peer answer
@@ -101,6 +106,12 @@ export const PeerBattleModal: React.FC<PeerBattleModalProps> = ({
   const nextQuestion = () => {
     if (questionIdx + 1 >= questions.length) {
       setIsFinished(true);
+      soundFx.playVictory();
+      confetti({
+        particleCount: 90,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
       // Give points bonus to user
       updateUser({ totalPoints: user.totalPoints + 30 });
     } else {

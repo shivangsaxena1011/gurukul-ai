@@ -1,0 +1,17 @@
+{
+  "name": "Gurukul AI — Socratic 3D Learning",
+  "short_name": "Gurukul AI",
+  "description": "Bilingual AI Tutor for Classes 1 to 12 with 3D Knowledge Orb, Voice, Photo OCR, and Offline P2P Packs.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B0F19",
+  "theme_color": "#0B0F19",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

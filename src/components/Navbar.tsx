@@ -19,9 +19,10 @@ import {
 interface NavbarProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
+  onOpenDeveloperModal?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
+export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onOpenDeveloperModal }) => {
   const { language, setLanguage, t } = useLanguage();
   const { user, isOnline, toggleOfflineMode, pendingSyncCount, setIsOnboardingOpen } = useAuth();
 
@@ -142,16 +143,14 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
             </div>
 
             {/* Developer Credit Pill */}
-            <a
-              href="https://github.com/shivangsaxena1011"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Developed by Shivang Saxena"
-              className="hidden lg:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-ink-900 border border-white/10 hover:border-saffron-500/40 text-xs font-semibold text-ink-300 hover:text-white transition-all group"
+            <button
+              onClick={onOpenDeveloperModal}
+              title="Developed & Architected by Shivang Saxena"
+              className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-ink-900 border border-saffron-500/30 hover:border-saffron-500 text-xs font-semibold text-ink-300 hover:text-white transition-all shadow-md group cursor-pointer"
             >
               <Code2 className="w-3.5 h-3.5 text-saffron-400 group-hover:rotate-12 transition-transform" />
-              <span>Dev: <strong className="text-white font-bold">Shivang Saxena</strong></span>
-            </a>
+              <span>Dev: <strong className="text-amber-300 font-bold group-hover:text-white">Shivang Saxena</strong></span>
+            </button>
 
             {/* Grade/District Profile Settings */}
             <button

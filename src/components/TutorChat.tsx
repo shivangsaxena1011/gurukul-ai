@@ -3,6 +3,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
 import { ApiService } from '../services/api';
 import { ChatMessage, StructuredTutorResponse } from '../types';
+import { soundFx } from '../utils/soundEffects';
 import {
   Send,
   Mic,
@@ -15,7 +16,10 @@ import {
   HelpCircle,
   ChevronDown,
   ChevronUp,
-  RefreshCw
+  RefreshCw,
+  Copy,
+  Check,
+  Trash2
 } from 'lucide-react';
 
 interface TutorChatProps {
@@ -60,6 +64,7 @@ export const TutorChat: React.FC<TutorChatProps> = ({
   const [input, setInput] = useState(initialQuery || '');
   const [loading, setLoading] = useState(false);
   const [activeSpeechId, setActiveSpeechId] = useState<string | null>(null);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -79,6 +84,8 @@ export const TutorChat: React.FC<TutorChatProps> = ({
   const handleSend = async (textToSend?: string) => {
     const query = textToSend || input;
     if (!query.trim() || loading) return;
+
+    soundFx.playClick();
 
     const userMsg: ChatMessage = {
       id: 'u-' + Date.now(),
@@ -111,6 +118,7 @@ export const TutorChat: React.FC<TutorChatProps> = ({
       };
 
       setMessages((prev) => [...prev, assistantMsg]);
+      soundFx.playCorrect();
     } catch (e) {
       console.error(e);
     } finally {
@@ -178,6 +186,18 @@ export const TutorChat: React.FC<TutorChatProps> = ({
 
           <div className="flex items-center gap-2">
             <button
+              onClick={() => {
+                if (messages.length > 1) {
+                  setMessages([messages[0]]);
+                  soundFx.playClick();
+                }
+              }}
+              title={t('बातचीत साफ़ करें', 'Clear Conversation')}
+              className="p-2.5 rounded-xl bg-ink-800 text-ink-400 hover:text-rose-400 hover:bg-rose-500/10 border border-white/10 transition-colors"
+            >
+              <Trash2 className="w-4 h-4" />
+            </button>
+            <button
               onClick={onOpenVoice}
               title="Voice Tutor"
               className="p-2.5 rounded-xl bg-ink-800 text-emerald-400 hover:bg-emerald-500/10 border border-white/10 transition-colors"
@@ -224,31 +244,52 @@ export const TutorChat: React.FC<TutorChatProps> = ({
                           <Lightbulb className="w-3.5 h-3.5 text-saffron-400" />
                           {t('गुरुकुल AI मार्गदर्शन', 'Gurukul Guidance')}
                         </span>
-                        <button
-                          onClick={() => {
-                            const fullText = s
-                              ? [s.understanding, s.hint, s.explanation, s.finalAnswer].filter(Boolean).join('. ')
-                              : msg.content;
-                            speakText(msg.id, fullText);
-                          }}
-                          className={`flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg border transition-colors ${
-                            activeSpeechId === msg.id
-                              ? 'bg-saffron-500 text-ink-950 border-saffron-400 font-bold animate-pulse'
-                              : 'bg-white/5 text-ink-300 border-white/10 hover:text-white'
-                          }`}
-                        >
-                          {activeSpeechId === msg.id ? (
-                            <>
-                              <VolumeX className="w-3.5 h-3.5" />
-                              <span>{t('रोकें', 'Stop')}</span>
-                            </>
-                          ) : (
-                            <>
-                              <Volume2 className="w-3.5 h-3.5" />
-                              <span>{t('सुनें', 'Listen')}</span>
-                            </>
-                          )}
-                        </button>
+                        <div className="flex items-center gap-1.5">
+                          <button
+                            onClick={() => {
+                              const text = s
+                                ? [s.understanding, s.hint, s.explanation, s.finalAnswer].filter(Boolean).join('\n\n')
+                                : msg.content;
+                              navigator.clipboard.writeText(text);
+                              setCopiedId(msg.id);
+                              soundFx.playClick();
+                              setTimeout(() => setCopiedId(null), 2000);
+                            }}
+                            title={t('हल कॉपी करें', 'Copy Solution')}
+                            className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-ink-300 hover:text-white border border-white/10 transition-colors"
+                          >
+                            {copiedId === msg.id ? (
+                              <Check className="w-3.5 h-3.5 text-emerald-400" />
+                            ) : (
+                              <Copy className="w-3.5 h-3.5" />
+                            )}
+                          </button>
+                          <button
+                            onClick={() => {
+                              const fullText = s
+                                ? [s.understanding, s.hint, s.explanation, s.finalAnswer].filter(Boolean).join('. ')
+                                : msg.content;
+                              speakText(msg.id, fullText);
+                            }}
+                            className={`flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg border transition-colors ${
+                              activeSpeechId === msg.id
+                                ? 'bg-saffron-500 text-ink-950 border-saffron-400 font-bold animate-pulse'
+                                : 'bg-white/5 text-ink-300 border-white/10 hover:text-white'
+                            }`}
+                          >
+                            {activeSpeechId === msg.id ? (
+                              <>
+                                <VolumeX className="w-3.5 h-3.5" />
+                                <span>{t('रोकें', 'Stop')}</span>
+                              </>
+                            ) : (
+                              <>
+                                <Volume2 className="w-3.5 h-3.5" />
+                                <span>{t('सुनें', 'Listen')}</span>
+                              </>
+                            )}
+                          </button>
+                        </div>
                       </div>
 
                       {/* Structured Socratic Sections */}

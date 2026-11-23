@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Mic, MicOff, X, Volume2, Sparkles, Check } from 'lucide-react';
+import { soundFx } from '../utils/soundEffects';
+import { Mic, MicOff, X, Volume2, Sparkles, Check, RefreshCw, Radio } from 'lucide-react';
 
 interface VoiceModalProps {
   isOpen: boolean;
@@ -17,77 +18,154 @@ export const VoiceModal: React.FC<VoiceModalProps> = ({
   const [isRecording, setIsRecording] = useState(false);
   const [transcript, setTranscript] = useState('');
   const [timer, setTimer] = useState(0);
+  const [audioLevels, setAudioLevels] = useState<number[]>([15, 20, 10, 30, 25, 40, 35, 20, 15, 10]);
   const intervalRef = useRef<number | null>(null);
+  const animFrameRef = useRef<number | null>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const analyserRef = useRef<AnalyserNode | null>(null);
+  const mediaStreamRef = useRef<MediaStream | null>(null);
+  const recognitionRef = useRef<any>(null);
 
   useEffect(() => {
     if (isOpen) {
       setTranscript('');
       setTimer(0);
-      startListening();
+      soundFx.playClick();
+      startVoiceSession();
     } else {
-      stopListening();
+      stopVoiceSession();
     }
+    return () => {
+      stopVoiceSession();
+    };
   }, [isOpen]);
 
-  const startListening = () => {
+  const startVoiceSession = async () => {
     setIsRecording(true);
     setTimer(0);
+
+    // Timer increment
     intervalRef.current = window.setInterval(() => {
       setTimer((t) => t + 1);
     }, 1000);
 
-    // Try SpeechRecognition if available in browser
+    // 1. Microphone Audio Stream for Real Waveform Visualizer
+    try {
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaStreamRef.current = stream;
+
+        const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+        if (AudioCtx) {
+          const ctx = new AudioCtx();
+          audioContextRef.current = ctx;
+          const analyser = ctx.createAnalyser();
+          analyser.fftSize = 32;
+          analyserRef.current = analyser;
+
+          const source = ctx.createMediaStreamSource(stream);
+          source.connect(analyser);
+
+          const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+          const updateWaveform = () => {
+            if (!analyserRef.current) return;
+            analyserRef.current.getByteFrequencyData(dataArray);
+            // Map frequencies to 10 visual bars
+            const bars = Array.from({ length: 12 }, (_, i) => {
+              const val = dataArray[i] || 0;
+              return Math.max(12, Math.round((val / 255) * 100));
+            });
+            setAudioLevels(bars);
+            animFrameRef.current = requestAnimationFrame(updateWaveform);
+          };
+          updateWaveform();
+        }
+      }
+    } catch (micErr) {
+      // Fallback simulated dynamic waveform if mic permission denied
+      intervalRef.current = window.setInterval(() => {
+        setAudioLevels((prev) =>
+          prev.map(() => Math.floor(Math.random() * 75) + 20)
+        );
+      }, 100);
+    }
+
+    // 2. Real Speech-To-Text API
     const SpeechRec = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (SpeechRec) {
       try {
         const recognition = new SpeechRec();
+        recognitionRef.current = recognition;
         recognition.lang = language === 'hi' ? 'hi-IN' : 'en-IN';
-        recognition.continuous = false;
+        recognition.continuous = true;
         recognition.interimResults = true;
 
         recognition.onresult = (event: any) => {
           let text = '';
-          for (let i = event.resultIndex; i < event.results.length; i++) {
+          for (let i = 0; i < event.results.length; i++) {
             text += event.results[i][0].transcript;
           }
-          setTranscript(text);
+          if (text.trim()) {
+            setTranscript(text);
+          }
         };
 
         recognition.onerror = () => {
-          // Provide fallback simulation
-          simulateSpeech();
+          simulateFallbackSpeech();
         };
 
         recognition.start();
         return;
       } catch (e) {
-        simulateSpeech();
+        simulateFallbackSpeech();
       }
     } else {
-      simulateSpeech();
+      simulateFallbackSpeech();
     }
   };
 
-  const simulateSpeech = () => {
+  const simulateFallbackSpeech = () => {
     setTimeout(() => {
       if (language === 'en') {
         setTranscript("How to find the HCF of 135 and 225 using Euclid's division lemma?");
       } else {
-        setTranscript('यूक्लिड विभाजन प्रमेयिका का प्रयोग 135 और 225 के लिए कैसे करें?');
+        setTranscript('यूक्लिड विभाजन प्रमेयिका का प्रयोग करके 135 और 225 का HCF कैसे ज्ञात करें?');
       }
-    }, 2000);
+    }, 2200);
   };
 
-  const stopListening = () => {
+  const stopVoiceSession = () => {
     setIsRecording(false);
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
+    if (animFrameRef.current) {
+      cancelAnimationFrame(animFrameRef.current);
+      animFrameRef.current = null;
+    }
+    if (recognitionRef.current) {
+      try {
+        recognitionRef.current.stop();
+      } catch (e) {}
+      recognitionRef.current = null;
+    }
+    if (mediaStreamRef.current) {
+      mediaStreamRef.current.getTracks().forEach((t) => t.stop());
+      mediaStreamRef.current = null;
+    }
+    if (audioContextRef.current) {
+      try {
+        audioContextRef.current.close();
+      } catch (e) {}
+      audioContextRef.current = null;
+    }
   };
 
   const handleConfirm = () => {
     if (transcript.trim()) {
+      soundFx.playClick();
       onSubmitQuestion(transcript.trim());
       onClose();
     }
@@ -96,7 +174,7 @@ export const VoiceModal: React.FC<VoiceModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-ink-950/80 backdrop-blur-md animate-fade-in">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-ink-950/85 backdrop-blur-md animate-fade-in">
       <div className="relative w-full max-w-md glass-panel border border-saffron-500/30 rounded-2xl sm:rounded-3xl p-5 sm:p-8 text-center space-y-5 sm:space-y-6 shadow-2xl max-h-[90dvh] overflow-y-auto">
         {/* Close Button */}
         <button
@@ -110,82 +188,110 @@ export const VoiceModal: React.FC<VoiceModalProps> = ({
         {/* Modal Header */}
         <div className="space-y-1">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold">
-            <Volume2 className="w-3.5 h-3.5" />
-            <span>{t('आवाज़ से पूछें', 'Voice Tutor')}</span>
+            <Radio className="w-3.5 h-3.5 animate-pulse" />
+            <span>{t('लाइव वॉयस ट्यूटर', 'Live Voice Recognition')}</span>
           </div>
           <h2 className="text-xl font-extrabold text-white">
             {t('अपनी भाषा में बोलें', 'Speak in your language')}
           </h2>
           <p className="text-xs text-ink-300">
-            {t('हिंदी या अंग्रेजी में कोई भी प्रश्न पूछें।', 'Ask any question naturally.')}
+            {t('हिंदी, अंग्रेजी या हिंग्लिश में कोई भी सवाल पूछें।', 'Ask any academic question naturally.')}
           </p>
         </div>
 
-        {/* 3D Soundwave Orb Visual */}
-        <div className="relative my-6 flex items-center justify-center">
-          <div className={`w-32 h-32 rounded-full flex items-center justify-center transition-all duration-300 ${
-            isRecording
-              ? 'bg-gradient-to-tr from-emerald-500/20 via-saffron-500/30 to-amber-500/40 shadow-[0_0_50px_rgba(245,158,11,0.4)] scale-110'
-              : 'bg-ink-900 border border-white/10'
-          }`}>
-            {/* Concentric Pulsing Rings */}
-            {isRecording && (
-              <>
-                <div className="absolute inset-0 rounded-full border-2 border-saffron-400/40 animate-ping" />
-                <div className="absolute -inset-4 rounded-full border border-emerald-400/30 animate-pulse" />
-              </>
+        {/* Animated Central Glowing Microphone */}
+        <div className="relative flex flex-col items-center justify-center py-4">
+          {/* Pulsing Concentric Rings */}
+          <div
+            className={`absolute w-36 h-36 rounded-full transition-all duration-700 ${
+              isRecording
+                ? 'bg-gradient-to-r from-saffron-500/20 via-amber-500/15 to-emerald-500/20 animate-ping opacity-60'
+                : 'opacity-0'
+            }`}
+          />
+          <div
+            className={`absolute w-28 h-28 rounded-full transition-all duration-300 ${
+              isRecording
+                ? 'bg-saffron-500/15 border border-saffron-500/30 animate-pulse'
+                : 'bg-white/5'
+            }`}
+          />
+
+          {/* Mic Button */}
+          <button
+            onClick={() => {
+              if (isRecording) {
+                stopVoiceSession();
+              } else {
+                startVoiceSession();
+              }
+            }}
+            className={`relative z-10 w-20 h-20 rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 ${
+              isRecording
+                ? 'bg-gradient-to-tr from-saffron-500 via-amber-400 to-amber-500 text-ink-950 scale-105 shadow-saffron-500/40'
+                : 'bg-ink-900 border border-white/20 text-ink-300 hover:text-white hover:scale-105'
+            }`}
+          >
+            {isRecording ? (
+              <Mic className="w-9 h-9 animate-pulse" />
+            ) : (
+              <MicOff className="w-9 h-9" />
             )}
-            <button
-              onClick={() => (isRecording ? stopListening() : startListening())}
-              aria-label={isRecording ? 'Stop Recording' : 'Start Recording'}
-              className="w-20 h-20 rounded-full bg-gradient-to-tr from-saffron-500 to-amber-500 text-ink-950 flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-transform"
-            >
-              {isRecording ? <Mic className="w-8 h-8 fill-ink-950 animate-bounce" /> : <MicOff className="w-8 h-8" />}
-            </button>
+          </button>
+
+          {/* Recording Timer */}
+          <div className="mt-4 flex items-center gap-2 text-xs font-mono font-bold text-ink-400">
+            <span className={`w-2 h-2 rounded-full ${isRecording ? 'bg-rose-500 animate-ping' : 'bg-ink-600'}`} />
+            <span>00:{timer.toString().padStart(2, '0')}</span>
           </div>
         </div>
 
-        {/* Recording Timer */}
-        <div className="text-xs font-bold text-ink-400">
-          {isRecording ? (
-            <span className="text-emerald-400 flex items-center justify-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-              {t('रिकॉर्डिंग जारी है…', 'Listening…')} ({timer}s)
-            </span>
+        {/* Real Dynamic Audio Levels Waveform */}
+        <div className="flex items-center justify-center gap-1.5 h-10 px-4 py-2 bg-ink-950/60 rounded-2xl border border-white/5">
+          {audioLevels.map((lvl, idx) => (
+            <div
+              key={idx}
+              className={`w-1.5 rounded-full transition-all duration-100 ${
+                isRecording
+                  ? 'bg-gradient-to-t from-saffron-500 to-emerald-400'
+                  : 'bg-white/10'
+              }`}
+              style={{ height: isRecording ? `${lvl}%` : '20%' }}
+            />
+          ))}
+        </div>
+
+        {/* Live Transcript Display with Blinking Cursor */}
+        <div className="min-h-[72px] p-4 rounded-2xl bg-ink-950/80 border border-white/10 flex items-center justify-center text-center">
+          {transcript ? (
+            <p className="text-sm font-semibold text-white leading-relaxed">
+              "{transcript}"
+              {isRecording && <span className="inline-block w-1.5 h-4 ml-1 bg-saffron-400 animate-pulse" />}
+            </p>
           ) : (
-            <span>{t('माइक दबाकर फिर बोलें', 'Tap mic to record')}</span>
+            <div className="flex items-center gap-2 text-xs text-ink-500 italic">
+              <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+              <span>{t('आपकी आवाज़ सुनी जा रही है… बोलिए', 'Listening to your voice… speak now')}</span>
+            </div>
           )}
         </div>
 
-        {/* Live Transcript Display */}
-        <div className="min-h-[80px] bg-ink-950/60 p-4 rounded-2xl border border-white/10 text-left">
-          <div className="text-[10px] uppercase font-bold text-ink-400 mb-1">
-            {t('सुना गया पाठ (Transcript):', 'Live Transcript:')}
-          </div>
-          <p className="text-sm font-semibold text-white">
-            {transcript || (
-              <span className="text-ink-500 italic">
-                {t('साफ़ और पास आकर बोलिए...', 'Speak clearly near your microphone...')}
-              </span>
-            )}
-          </p>
-        </div>
-
-        {/* Actions */}
-        <div className="flex gap-3">
+        {/* Action Controls */}
+        <div className="flex items-center gap-3 pt-2">
           <button
             onClick={onClose}
-            className="flex-1 py-3 rounded-xl bg-ink-900 border border-white/10 text-ink-300 font-bold text-sm hover:bg-white/5 transition-colors"
+            className="flex-1 py-3 rounded-2xl bg-white/5 hover:bg-white/10 text-ink-300 hover:text-white font-bold text-xs transition-colors"
           >
             {t('रद्द करें', 'Cancel')}
           </button>
+
           <button
             onClick={handleConfirm}
             disabled={!transcript.trim()}
-            className="flex-1 py-3 rounded-xl bg-gradient-to-r from-saffron-500 to-amber-600 text-ink-950 font-extrabold text-sm shadow-lg shadow-saffron-500/20 hover:scale-[1.02] disabled:opacity-40 transition-all flex items-center justify-center gap-1.5"
+            className="flex-1 py-3 rounded-2xl bg-gradient-to-r from-saffron-500 to-amber-600 text-ink-950 font-extrabold text-xs shadow-xl shadow-saffron-500/25 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-40 transition-all flex items-center justify-center gap-1.5"
           >
             <Check className="w-4 h-4" />
-            <span>{t('पूछें (Submit)', 'Ask Question')}</span>
+            <span>{t('AI ट्यूटर से पूछें', 'Ask AI Tutor')}</span>
           </button>
         </div>
       </div>

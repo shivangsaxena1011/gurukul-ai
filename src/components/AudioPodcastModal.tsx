@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
 import { Chapter } from '../types';
+import { soundFx } from '../utils/soundEffects';
 import {
   Volume2,
   VolumeX,
@@ -107,6 +108,7 @@ Exam Tip: The reaction of Iron nails in Copper Sulphate solution and the color s
   };
 
   const togglePlay = () => {
+    soundFx.playClick();
     if (isPlaying) {
       stopAudio();
     } else {
@@ -115,6 +117,7 @@ Exam Tip: The reaction of Iron nails in Copper Sulphate solution and the color s
   };
 
   const changeRate = (rate: number) => {
+    soundFx.playClick();
     setPlaybackRate(rate);
     if (isPlaying) {
       stopAudio();

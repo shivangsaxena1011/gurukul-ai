@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { localDB } from '../services/indexedDB';
 import { OfflinePack } from '../types';
+import { soundFx } from '../utils/soundEffects';
 import QRCode from 'qrcode';
 import {
   QrCode,
@@ -70,6 +71,7 @@ export const OfflineQRShareModal: React.FC<OfflineQRShareModalProps> = ({
 
   const handleCopyPayload = () => {
     if (!pack) return;
+    soundFx.playClick();
     const payload = JSON.stringify({
       g_id: 'GURUKUL_P2P',
       slug: pack.slug,
@@ -98,6 +100,7 @@ export const OfflineQRShareModal: React.FC<OfflineQRShareModalProps> = ({
       };
 
       await localDB.savePack(newPack);
+      soundFx.playCorrect();
       setImportSuccess(true);
       if (onPackImported) onPackImported();
       setTimeout(() => {
